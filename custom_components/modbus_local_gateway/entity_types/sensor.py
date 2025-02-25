@@ -14,10 +14,10 @@ from homeassistant.helpers import device_registry as dr
 from homeassistant.helpers.device_registry import DeviceInfo
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
-from .coordinator import ModbusContext, ModbusCoordinator, ModbusCoordinatorEntity
-from .helpers import async_setup_entities
-from .device_config.base import ModbusSensorEntityDescription
-from .device_config.const import ControlType
+from ..coordinator import ModbusContext, ModbusCoordinator, ModbusCoordinatorEntity
+from ..helpers import async_setup_entities
+from ..entity_management.base import ModbusSensorEntityDescription
+from ..entity_management.const import ControlType
 
 _LOGGER = logging.getLogger(__name__)
 
