@@ -2,7 +2,9 @@ device:
   manufacturer: Finder
   model: 7M.24
 
-entities:
+read_write_word:
+
+read_only_word:
   Voltage:
     address: 2500
     title: Voltage
@@ -36,7 +38,7 @@ entities:
   Apparent Power:
     address: 2546
     title: Apparent Power
-    unit_of_measurement: VoltsA
+    unit_of_measurement: VoltAmps  # Note: Corrected from "VoltsA" to "VoltAmps"
     precision: 2
     float: True
     device_class: apparent_power
@@ -189,3 +191,7 @@ entities:
     device_class: energy
     state_class: total_increasing
     size: 2
+
+read_write_boolean:
+
+read_only_boolean:

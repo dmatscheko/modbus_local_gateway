@@ -2,7 +2,9 @@ device:
   manufacturer: Finder
   model: 7M.38
 
-entities:
+read_write_word:
+
+read_only_word:
   L1 Voltage:
     address: 2500
     title: L1 Voltage
@@ -173,7 +175,7 @@ entities:
   Total reactive Power:
     address: 2544
     title: Total reactive Power
-    unit_of_measurement: vae
+    unit_of_measurement: VAr
     precision: 2
     float: True
     state_class: measurement
@@ -352,3 +354,7 @@ entities:
     state_class: total_increasing
     size: 2
     multiplier: 0.1
+
+read_write_boolean:
+
+read_only_boolean:

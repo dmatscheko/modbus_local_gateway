@@ -1,6 +1,8 @@
 device:
   manufacturer: Eastron
   model: SDM-630
+
+read_write_word:
   serial_num:
     title: Serial Number
     address: 64512
@@ -30,7 +32,7 @@ device:
       3: 19200 bps
       4: 38400 bps
 
-entities:
+read_only_word:
   Phase 1 Voltage:
     address: 0
     title: Phase 1 Voltage
@@ -160,7 +162,7 @@ entities:
     size: 2
 
   Phase 2 Power Factor:
-    address: 34
+    address: 32  # Note: Was duplicate "address: 34" like below, corrected to "address: 32"
     title: Phase 2 Power Factor
     precision: 2
     float: True
@@ -766,3 +768,7 @@ entities:
     float: True
     state_class: measurement
     size: 2
+
+read_write_boolean:
+
+read_only_boolean:

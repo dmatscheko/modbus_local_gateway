@@ -76,16 +76,7 @@ async def async_setup_entities(
                 ctx=ModbusContext(slave_id=config[CONF_SLAVE_ID], desc=desc),
                 device=device,
             )
-            for desc in device_info.entity_desciptions
-            if desc.control_type == control
-        ]
-        + [
-            entity_class(
-                coordinator=coordinator,
-                ctx=ModbusContext(slave_id=config[CONF_SLAVE_ID], desc=desc),
-                device=device,
-            )
-            for desc in device_info.properties
+            for desc in device_info.entity_descriptions
             if desc.control_type == control
         ],
         update_before_add=False,

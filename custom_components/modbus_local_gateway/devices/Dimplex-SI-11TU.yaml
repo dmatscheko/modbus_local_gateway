@@ -1,0 +1,553 @@
+device:
+  manufacturer: Dimplex
+  model: Dimplex Sole/Wasser-Wärmepumpe SI 11TU
+  max_register_read: 10
+
+
+read_write_word:
+
+  operating_mode:
+    title: Betriebsmodus
+    address: 5015
+    control: select
+    options:
+      0: Sommer
+      1: Auto
+      2: Urlaub
+      3: Party
+      4: 2.Wärmeerzeuger
+      5: Kühlen
+    icon: mdi:cog
+
+  # 1. Heizkreis
+
+  heating_parallel_shift:
+    title: Heizung Parallelverschiebung
+    address: 5036
+    control: select
+    options:
+      0: "-19 °C"
+      1: "-18 °C"
+      2: "-17 °C"
+      3: "-16 °C"
+      4: "-15 °C"
+      5: "-14 °C"
+      6: "-13 °C"
+      7: "-12 °C"
+      8: "-11 °C"
+      9: "-10 °C"
+      10: "-9 °C"
+      11: "-8 °C"
+      12: "-7 °C"
+      13: "-6 °C"
+      14: "-5 °C"
+      15: "-4 °C"
+      16: "-3 °C"
+      17: "-2 °C"
+      18: "-1 °C"
+      19: "0 °C"
+      20: "1 °C"
+      21: "2 °C"
+      22: "3 °C"
+      23: "4 °C"
+      24: "5 °C"
+      25: "6 °C"
+      26: "7 °C"
+      27: "8 °C"
+      28: "9 °C"
+      29: "10 °C"
+      30: "11 °C"
+      31: "12 °C"
+      32: "13 °C"
+      33: "14 °C"
+      34: "15 °C"
+      35: "16 °C"
+      36: "17 °C"
+      37: "18 °C"
+      38: "19 °C"
+    icon: mdi:home-thermometer-outline
+
+  heating_room_temperature:
+    title: Heizung Raumtemperatur
+    address: 46
+    precision: 0
+    control: number
+    number:
+      min: 15
+      max: 30
+    unit_of_measurement: °C
+    icon: mdi:home-thermometer-outline
+
+  heating_fixed_target:
+    title: Heizung Festwertsolltemperatur
+    address: 5037
+    precision: 0
+    control: number
+    number:
+      min: 18
+      max: 60
+    unit_of_measurement: °C
+    icon: mdi:home-thermometer
+
+  heating_curve_end_point:
+    title: Heizung Heizkurvenendpunkt
+    address: 5038
+    precision: 0
+    control: number
+    number:
+      min: 20
+      max: 70
+    unit_of_measurement: °C
+    icon: mdi:home-thermometer-outline
+
+  heating_hysteresis:
+    title: Heizung Hysterese
+    address: 47
+    precision: 1
+    multiplier: 0.1
+    control: number
+    number:
+      min: 0.5
+      max: 5.0
+    unit_of_measurement: K
+    icon: mdi:home-thermometer-outline
+
+  external_block_software:
+    title: Softwaresperre Extern
+    address: 5130
+    control: select
+    options:
+      0: Hardwareeingang
+      10: Sperre nicht aktiv
+      11: Sperre aktiv
+    icon: mdi:lock
+
+  # Warmwasser
+
+  hot_water_hysteresis:
+    title: Warmwasser Hysterese
+    address: 5045
+    precision: 0
+    control: number
+    number:
+      min: 2
+      max: 15
+    unit_of_measurement: K
+    icon: mdi:water-thermometer-outline
+
+  hot_water_fixed_target:
+    title: Warmwasser Festwertsolltemperatur
+    address: 5047
+    precision: 0
+    control: number
+    number:
+      min: 18
+      max: 60
+    unit_of_measurement: °C
+    icon: mdi:water-thermometer
+
+  hot_water_min_fixed_target:
+    title: Warmwasser Solltemperatur Minimal
+    address: 5145
+    precision: 0
+    control: number
+    number:
+      min: 10
+      max: 60
+    unit_of_measurement: °C
+    icon: mdi:water-thermometer-outline
+
+  hot_water_max_fixed_target:
+    title: Warmwasser Solltemperatur Maximal
+    address: 5048
+    precision: 0
+    control: number
+    number:
+      min: 10
+      max: 60
+    unit_of_measurement: °C
+    icon: mdi:water-thermometer-outline
+
+read_only_word:
+
+  # Betriebsdaten / Operating Data
+
+  outside_temp:
+    title: Außentemperatur (R1)
+    address: 1
+    precision: 1
+    multiplier: 0.1
+    unit_of_measurement: °C
+    icon: mdi:thermometer
+
+  heating_return_temp:
+    title: Heizung Rücklauftemperatur (R2)
+    address: 2
+    precision: 1
+    multiplier: 0.1
+    unit_of_measurement: °C
+    icon: mdi:thermometer
+
+  heating_return_target:
+    title: Heizung Rücklaufsolltemperatur
+    address: 53
+    precision: 1
+    multiplier: 0.1
+    unit_of_measurement: °C
+    icon: mdi:thermometer
+
+  hot_water_temp:
+    title: Warmwasser Temperatur (R3)
+    address: 3
+    precision: 1
+    multiplier: 0.1
+    unit_of_measurement: °C
+    icon: mdi:thermometer
+
+  hot_water_target:
+    title: Warmwasser Solltemperatur
+    address: 58
+    precision: 1
+    multiplier: 0.1
+    unit_of_measurement: °C
+    icon: mdi:thermometer
+
+  flow_temp:
+    title: Vorlauftemperatur (R9)
+    address: 5
+    precision: 1
+    multiplier: 0.1
+    unit_of_measurement: °C
+    icon: mdi:thermometer
+
+  source_input_temp:
+    title: Wärmequelleneintrittstemperatur (R24)
+    address: 6
+    precision: 1
+    multiplier: 0.1
+    unit_of_measurement: °C
+    icon: mdi:thermometer
+
+  source_output_temp:
+    title: Wärmequellenaustrittstemperatur (R6)
+    address: 7
+    precision: 1
+    multiplier: 0.1
+    unit_of_measurement: °C
+    icon: mdi:thermometer
+
+  # Operating Hours
+
+  compressor1_hours:
+    title: Verdichter 1 Laufzeit
+    address: 72
+    precision: 0
+    never_resets: True
+    state_class: total_increasing
+    unit_of_measurement: h
+    icon: mdi:history
+
+  primary_pump_hours:
+    title: Primärpumpe / Ventilator (M11) Laufzeit
+    address: 74
+    precision: 0
+    never_resets: True
+    state_class: total_increasing
+    unit_of_measurement: h
+    icon: mdi:history
+
+  heating_pump_hours:
+    title: Heizungspumpe (M13) Laufzeit
+    address: 76
+    precision: 0
+    never_resets: True
+    state_class: total_increasing
+    unit_of_measurement: h
+    icon: mdi:history
+
+  hot_water_pump_hours:
+    title: Warmwasserpumpe (M18) Laufzeit
+    address: 77
+    precision: 0
+    never_resets: True
+    state_class: total_increasing
+    unit_of_measurement: h
+    icon: mdi:history
+
+  additional_pump_hours:
+    title: Zusatzumwälzpumpe (M16) Laufzeit
+    address: 71
+    precision: 0
+    never_resets: True
+    state_class: total_increasing
+    unit_of_measurement: h
+    icon: mdi:history
+
+  # Energy Measurements
+
+  heating_energy:
+    title: Wärmemenge Heizung
+    address: 5096
+    precision: 0
+    size: 3
+    sum_scale: [1, 10000, 100000000] # TODO: implement this
+    never_resets: True
+    state_class: total_increasing
+    unit_of_measurement: kWh
+    icon: mdi:meter-electric
+
+  hot_water_energy:
+    title: Wärmemenge Warmwasser
+    address: 5099
+    precision: 0
+    size: 3
+    sum_scale: [1, 10000, 100000000] # TODO: implement this
+    never_resets: True
+    state_class: total_increasing
+    unit_of_measurement: kWh
+    icon: mdi:meter-electric
+
+  # Status Messages
+
+  operation_status:
+    title: Statusmeldung
+    address: 103
+    map:
+      0: "Aus"
+      1: "Aus"
+      2: "Heizen"
+      3: "Schwimmbad"
+      4: "Warmwasser"
+      5: "Kühlen"
+      10: "Abtauen"
+      11: "Durchflussüberwachung"
+      24: "Verzögerung Betriebsmodusumschaltung"
+      30: "Sperre"
+    icon: mdi:message-processing
+
+  blocking_status:
+    title: Sperrmeldung
+    address: 104
+    map:
+      0: "keine Meldung"
+      2: "Volumenstrom"
+      5: "Funktionskontrolle"
+      6: "Einsatzgrenze HT"
+      7: "Systemkontrolle"
+      8: "Verzögerung Umschaltung Kühlen"
+      9: "Pumpenvorlauf"
+      10: "Mindeststandzeit"
+      11: "Netzbelastung"
+      12: "Schaltspielsperre"
+      13: "Warmwasser Nacherwärmung"
+      14: "Regenerativ"
+      15: "EVU-Sperre"
+      16: "Sanftanlasser"
+      17: "Durchfluss"
+      18: "Einsatzgrenze Wärmepumpe"
+      19: "Hochdruck"
+      20: "Niederdruck"
+      21: "Einsatzgrenze Wärmequelle"
+      23: "System Grenze"
+      24: "Last Primärkreis"
+      25: "Sperre Extern"
+      29: "Inverter"
+      31: "Aufwärmen"
+      33: "EvD Initialisierung"
+      34: "2.Wärmeerzeuger freigegeben"
+      35: "Störung"
+    icon: mdi:message-alert
+
+  fault_status:
+    title: Störmeldung
+    address: 105
+    map:
+      0: "kein Fehler"
+      1: "Fehler N17.1"
+      2: "Fehler N17.2"
+      3: "Fehler N17.3"
+      4: "Fehler N17.4"
+      6: "Elektronisches Ex.Ventil"
+      10: "WPIO"
+      12: "Inverter"
+      13: "WQIF"
+      15: "Sensorik"
+      16: "Niederdruck Sole"
+      19: "!Primärkreis"
+      20: "!Abtauen"
+      21: "!Niederdruck Sole"
+      22: "!Warmwasser"
+      23: "!Last Verdichter"
+      24: "!Codierung"
+      25: "!Niederdruck"
+      26: "!Frostschutz"
+      28: "!Hochdruck"
+      29: "!Temperatur Differenz"
+      30: "!Heisgasthermostat"
+      31: "!Durchfluss"
+      32: "!Aufwärmen"
+    icon: mdi:message-alert
+
+  sensor_status:
+    title: Sensorfehler
+    address: 106
+    map:
+      0: "keine Meldung"
+      1: "Außenfühler (R1)"
+      2: "Rücklauffühler (R2)"
+      3: "Warmwasserfühler (R3)"
+      4: "Codierung (R7)"
+      5: "Vorlauffühler (R9)"
+      6: "2.Heizkreisfühler (R5)"
+      7: "3.Heizkreisfühler (R13)"
+      8: "Regenerativfühler (R13)"
+      9: "Raumfühler 1"
+      10: "Raumfühler 2"
+      11: "Fühler Wärmequellenaustritt (R6)"
+      12: "Fühler Wärmequelleneintritt (R24)*"
+      14: "Kollektorfühler (R23)"
+      15: "Niederdrucksensor (R25)"
+      16: "Hochdrucksensor (R26)"
+      17: "Raumfeuchte 1"
+      18: "Raumfeuchte 2"
+      19: "Fühler Frostschutz-Kälte"
+      20: "Heißgas"
+      21: "Rücklauffühler (R2.1)"
+      22: "Schwimmbadfühler (R20)"
+      23: "Vorlauffühler Kühlen Passiv (R11)"
+      24: "Rücklauffühler Kühlen Passiv (R4)"
+      26: "Fühler Solarspeicher (R22)"
+      28: "Anforderungsfühler Heizen (R2.2)"
+      29: "RTM Econ"
+      30: "Anforderungsfühler Kühlen (R39)"
+    icon: mdi:message-alert
+
+read_write_boolean:
+
+read_only_boolean:
+
+  ## Eingänge
+
+  hot_water_thermostat:
+    title: Warmwasserthermostat
+    address: 3
+    bits: 1
+    map:
+      0: "Inaktiv"
+      1: "Anforderung"
+    icon: mdi:thermostat
+
+  utility_block:
+    title: EVU-Sperre
+    address: 5
+    bits: 1
+    map:
+      0: "Freigegeben"
+      1: "Gesperrt"
+    icon: mdi:eye-lock
+
+  external_block:
+    title: Sperre Extern
+    address: 6
+    bits: 1
+    map:
+      0: "Freigegeben"
+      1: "Gesperrt"
+    icon: mdi:eye-lock
+
+  ## Ausgänge
+
+  compressor1:
+    title: Verdichter 1 Modus
+    address: 41
+    bits: 1
+    device_class: running
+
+  primary_pump:
+    title: Primärpumpe (M11) / Ventilator (M2) Modus
+    address: 43
+    bits: 1
+    device_class: running
+
+  heating_pump:
+    title: Heizungspumpe (M13) Modus
+    address: 45
+    bits: 1
+    device_class: running
+
+  hot_water_pump:
+    title: Warmwasserpumpe (M18) Modus
+    address: 46
+    bits: 1
+    device_class: running
+
+  mixer_open:
+    title: Mischer (M21) Modus
+    address: 47
+    bits: 1
+    device_class: opening
+
+  additional_pump:
+    title: Zusatzumwälzpumpe (M16) Modus
+    address: 49
+    bits: 1
+    device_class: running
+
+  heating_pump_m15:
+    title: Heizungspumpe (M15) Modus
+    address: 51
+    bits: 1
+    device_class: running
+
+  mixer_m22_open:
+    title: Mischer (M22) Modus
+    address: 52
+    bits: 1
+    device_class: opening
+
+  pool_pump:
+    title: Schwimmbadpumpe (M19) Modus
+    address: 56
+    bits: 1
+    device_class: running
+
+  error_indicator:
+    title: Sammelstörmeldung (H5) Modus
+    address: 57
+    bits: 1
+    device_class: problem
+
+  heating_pump_m14:
+    title: Heizungspumpe (M14) Modus
+    address: 59
+    bits: 1
+    device_class: running
+
+  cooling_pump:
+    title: Kühlpumpe (M17) Modus
+    address: 60
+    bits: 1
+    device_class: running
+
+  heating_pump_m20:
+    title: Heizungspumpe (M20) Modus
+    address: 61
+    bits: 1
+    device_class: running
+
+  room_thermostat_mode:
+    title: Umschaltung Raumthermostate Heizen/Kühlen (N9) Modus
+    address: 66
+    bits: 1
+
+  cooling_primary_pump:
+    title: Primärpumpe Kühlen (M12) Modus
+    address: 68
+    bits: 1
+    device_class: running
+
+  solar_pump:
+    title: Solarpumpe (M23) Modus
+    address: 71
+    bits: 1
+    device_class: running

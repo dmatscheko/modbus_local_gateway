@@ -2,6 +2,8 @@ device:
   manufacturer: Growatt
   model: MIN 6000TL-XH
   max_register_read: 5
+
+read_write_word:
   hw_version:
     title: Firmware version
     address: 9
@@ -105,7 +107,7 @@ device:
       "off": 0
       "on": 1
 
-entities:
+read_only_word:
   machine_status:
     title: Inverter Machine Status
     address: 3000
@@ -583,3 +585,7 @@ entities:
     multiplier: 0.1
     precision: 2
     size: 2
+
+read_write_boolean:
+
+read_only_boolean:

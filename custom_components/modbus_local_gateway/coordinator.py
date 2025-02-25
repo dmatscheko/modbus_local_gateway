@@ -25,7 +25,7 @@ _LOGGER: logging.Logger = logging.getLogger(__name__)
 
 
 class ModbusCoordinatorEntity(CoordinatorEntity):
-    """Base class for Modbus Entities"""
+    """Base class for Modbus entities"""
 
     def __init__(
         self,
@@ -108,7 +108,7 @@ class ModbusCoordinator(TimestampDataUpdateCoordinator):
         )
 
     async def async_update(self) -> dict[str, Any] | None:
-        """Updated all values for devices"""
+        """Fetch updated data for all registered entities"""
         if self.started:
             entities: list[ModbusContext] = sorted(
                 self.async_contexts(), key=lambda x: x.slave_id
@@ -116,6 +116,7 @@ class ModbusCoordinator(TimestampDataUpdateCoordinator):
             return await self._update_device(entities=entities)
 
     async def _update_device(self, entities: list[ModbusContext]) -> dict[str, Any]:
+        """Update data for a list of entities"""
         _LOGGER.debug("Updating data for %s (%s)", self.name, self.client)
         resp: dict[str, ModbusPDU] = await self.client.update_slave(
             entities, max_read_size=self._max_read_size
@@ -123,13 +124,12 @@ class ModbusCoordinator(TimestampDataUpdateCoordinator):
         data: dict[str, Any] = {}
         conversion: Conversion = Conversion(type(self.client))
 
-        entity: ModbusContext
         for entity in entities:
             if entity.desc.key in resp:
                 modbus_response: ModbusPDU = resp[entity.desc.key]
                 try:
-                    value: str | float | int | None = conversion.convert_from_registers(
-                        desc=entity.desc, registers=modbus_response.registers
+                    value: str | float | int | bool | None = conversion.convert_from_response(
+                        desc=entity.desc, response=modbus_response
                     )
                     data[entity.desc.key] = value
                     _LOGGER.debug("Value for key %s is %s", entity.desc.key, value)
@@ -142,8 +142,8 @@ class ModbusCoordinator(TimestampDataUpdateCoordinator):
 
         return data
 
-    def get_data(self, ctx: ModbusContext) -> str | int | None:
-        """returns the pre-retrieved data"""
+    def get_data(self, ctx: ModbusContext) -> str | int | bool | None:
+        """Retrieve cached data for a specific entity"""
         if self.data and ctx.desc.key in self.data:
             return self.data[ctx.desc.key]
         return None

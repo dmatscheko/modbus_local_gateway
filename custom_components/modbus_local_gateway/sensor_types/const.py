@@ -19,11 +19,19 @@ from homeassistant.const import (
 
 MODEL = "model"
 MANUFACTURER = "manufacturer"
+MAX_READ = "max_register_read"
+MAX_READ_DEFAULT = 8
+
 DEVICE = "device"
-ENTITIES = "entities"
+TYPE_HOLDING_REGISTER = "read_write_word"
+TYPE_INPUT_REGISTER = "read_only_word"
+TYPE_COIL = "read_write_boolean"
+TYPE_DISCRETE_INPUT = "read_only_boolean"
+
 REGISTER_ADDRESS = "address"
 REGISTER_COUNT = "size"
 REGISTER_MULTIPLIER = "multiplier"
+REGISTER_OFFSET = "offset"
 REGISTER_MAP = "map"
 ICON = "icon"
 PRECISION = "precision"
@@ -34,31 +42,36 @@ DEVICE_CLASS = "device_class"
 STATE_CLASS = "state_class"
 TITLE = "title"
 UNIT = "unit"
-MAX_READ = "max_register_read"
 BITS = "bits"
 SHIFT = "shift_bits"
 CONTROL_TYPE = "control"
 FLAGS = "flags"
-MAX_READ_DEFAULT = 8
 CATEGORY = "category"
 NEVER_RESETS = "never_resets"
 DEFAULT_STATE_CLASS = SensorStateClass.MEASUREMENT
 OPTIONS = "options"
 
 
+class ModbusDataType(StrEnum):
+    """Modbus data types"""
+    HOLDING_REGISTER = "holding_register"
+    INPUT_REGISTER = "input_register"
+    COIL = "coil"
+    DISCRETE_INPUT = "discrete_input"
+
+
 class ControlType(StrEnum):
     """Valid control types"""
-
     SENSOR = "sensor"
     SWITCH = "switch"
     SELECT = "select"
     TEXT = "text"
     NUMBER = "number"
+    BINARY_SENSOR = "binary_sensor"
 
 
 class Units(StrEnum):
     """Valid unit types for yaml definition"""
-
     CELSIUS = "Celsius"
     VOLTS = "Volts"
     AMPS = "Amps"

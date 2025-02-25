@@ -2,6 +2,8 @@ device:
   manufacturer: Growatt
   model: MIC 2500TL-X
   max_register_read: 5
+
+read_write_word:
   hw_version:
     title: Firmware version
     address: 9
@@ -59,7 +61,7 @@ device:
       min: 1
       max: 254
 
-entities:
+read_only_word:
   machine_status:
     title: Inverter Machine Status
     address: 3000
@@ -449,3 +451,7 @@ entities:
   Warning:
     title: Warning code
     address: 3106
+
+read_write_boolean:
+
+read_only_boolean:

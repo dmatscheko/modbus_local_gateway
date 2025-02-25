@@ -19,6 +19,7 @@ from .base import (
     ModbusSensorEntityDescription,
     ModbusSwitchEntityDescription,
     ModbusTextEntityDescription,
+    ModbusBinarySensorEntityDescription,
 )
 from .const import (
     BITS,
@@ -26,8 +27,11 @@ from .const import (
     CONTROL_TYPE,
     DEFAULT_STATE_CLASS,
     DEVICE,
+    TYPE_HOLDING_REGISTER,
+    TYPE_INPUT_REGISTER,
+    TYPE_COIL,
+    TYPE_DISCRETE_INPUT,
     DEVICE_CLASS,
-    ENTITIES,
     FLAGS,
     ICON,
     IS_FLOAT,
@@ -43,6 +47,7 @@ from .const import (
     REGISTER_COUNT,
     REGISTER_MAP,
     REGISTER_MULTIPLIER,
+    REGISTER_OFFSET,
     SHIFT,
     STATE_CLASS,
     TITLE,
@@ -50,6 +55,7 @@ from .const import (
     UOM,
     UOM_MAPPING,
     ControlType,
+    ModbusDataType,
 )
 
 _LOGGER = logging.getLogger(__name__)
@@ -60,6 +66,7 @@ DESCRIPTION_TYPE = (
     | ModbusSensorEntityDescription
     | ModbusSwitchEntityDescription
     | ModbusTextEntityDescription
+    | ModbusBinarySensorEntityDescription
 )
 
 
@@ -112,18 +119,25 @@ class ModbusDeviceInfo:
         raise DeviceConfigError()
 
     @property
-    def entity_desciptions(self) -> tuple[DESCRIPTION_TYPE, ...]:
+    def entity_descriptions(self) -> tuple[DESCRIPTION_TYPE, ...]:
         """Get the entity descriptions for the device"""
-        if self._config and isinstance(self._config, dict) and ENTITIES in self._config:
-            return self._create_descriptions(self._config[ENTITIES])
-        raise DeviceConfigError()
+        if not self._config or not isinstance(self._config, dict):
+            raise DeviceConfigError()
 
-    @property
-    def properties(self) -> tuple[ModbusEntityDescription, ...]:
-        """Get device properties descriptions"""
-        if self._config and isinstance(self._config, dict) and DEVICE in self._config:
-            return self._create_descriptions(self._config[DEVICE], holding=True)
-        raise DeviceConfigError()
+        descriptions = []
+        for section, data_type in [
+            (TYPE_HOLDING_REGISTER, ModbusDataType.HOLDING_REGISTER),
+            (TYPE_INPUT_REGISTER, ModbusDataType.INPUT_REGISTER),
+            (TYPE_COIL, ModbusDataType.COIL),
+            (TYPE_DISCRETE_INPUT, ModbusDataType.DISCRETE_INPUT),
+        ]:
+            if section in self._config and isinstance(self._config[section], dict):
+                for entity, entity_data in self._config[section].items():
+                    if isinstance(entity_data, dict):
+                        desc = self._create_description(entity, data_type, entity_data)
+                        if desc:
+                            descriptions.append(desc)
+        return tuple(descriptions)
 
     def get_uom(self, data) -> dict[str, str | None]:
         """Get the unit_of_measurement and device class"""
@@ -148,93 +162,104 @@ class ModbusDeviceInfo:
             "state_class": state_class,
         }
 
-    @classmethod
-    def _get_description_class(
-        cls, entity, params: dict, holding: bool, _data: dict
-    ) -> None | DESCRIPTION_TYPE:
-        """Gets the class for the description"""
+    def _create_description(self, entity: str, data_type: ModbusDataType, _data: dict[str, Any]) -> DESCRIPTION_TYPE | None:
+        """Create an entity description based on data type"""
+        uom = self.get_uom(_data)
+
+        default_control_type = {
+            ModbusDataType.HOLDING_REGISTER: ControlType.SENSOR,
+            ModbusDataType.INPUT_REGISTER: ControlType.SENSOR,
+            ModbusDataType.COIL: ControlType.BINARY_SENSOR,
+            ModbusDataType.DISCRETE_INPUT: ControlType.BINARY_SENSOR,
+        }
+        control_type = _data.get(CONTROL_TYPE, default_control_type[data_type])
+
+        params = {
+            "key": entity,
+            "name": _data.get(TITLE, entity),
+            "register_address": _data.get(REGISTER_ADDRESS),
+            "register_count": _data.get(REGISTER_COUNT, 1),
+            "register_multiplier": _data.get(REGISTER_MULTIPLIER, 1.0),
+            "register_offset": _data.get(REGISTER_OFFSET),
+            "register_map": _data.get(REGISTER_MAP),
+            "icon": _data.get(ICON),
+            "string": _data.get(IS_STRING, False),
+            "float": _data.get(IS_FLOAT, False),
+            "bits": _data.get(BITS),
+            "bit_shift": _data.get(SHIFT),
+            "flags": _data.get(FLAGS),
+            "never_resets": _data.get(NEVER_RESETS, False),
+            "data_type": data_type,
+            "control_type": control_type,
+            # Only include relevant uom keys based on control_type
+            "native_unit_of_measurement": uom["native_unit_of_measurement"],
+            "device_class": uom["device_class"],
+        }
+        # Only add state_class for sensors
+        if control_type == ControlType.SENSOR:
+            params["state_class"] = uom["state_class"]
+
+        allowed_control_types = {
+            ModbusDataType.HOLDING_REGISTER: [
+                ControlType.SENSOR,
+                ControlType.NUMBER,
+                ControlType.SELECT,
+                ControlType.TEXT,
+                ControlType.SWITCH,
+            ],
+            ModbusDataType.INPUT_REGISTER: [ControlType.SENSOR],
+            ModbusDataType.COIL: [ControlType.SWITCH],
+            ModbusDataType.DISCRETE_INPUT: [ControlType.BINARY_SENSOR],
+        }
+        if control_type not in allowed_control_types.get(data_type, []):
+            _LOGGER.warning("Invalid control_type %s for data_type %s", control_type, data_type)
+            return None
+
         try:
+            params["entity_category"] = EntityCategory(_data.get(CATEGORY))
+        except ValueError:
+            pass
+
+        desc_cls = None
+        if control_type == ControlType.SENSOR:
             desc_cls = ModbusSensorEntityDescription
-            if holding:
-                params.pop("state_class", None)
-                match (params["control_type"]):
-                    case ControlType.SWITCH:
-                        desc_cls = ModbusSwitchEntityDescription
-                        if ControlType.SWITCH in _data and isinstance(
-                            _data[ControlType.SWITCH], dict
-                        ):
-                            params.update(_data[ControlType.SWITCH])
-                    case ControlType.SELECT:
-                        desc_cls = ModbusSelectEntityDescription
-                        params.update({"select_options": _data.get(OPTIONS)})
-                    case ControlType.TEXT:
-                        desc_cls = ModbusTextEntityDescription
-                    case ControlType.NUMBER:
-                        desc_cls = ModbusNumberEntityDescription
-                        if ControlType.NUMBER in _data and isinstance(
-                            _data[ControlType.NUMBER], dict
-                        ):
-                            params.update(_data[ControlType.NUMBER])
-                            params.update({"precision": _data.get(PRECISION)})
-            else:
-                params.update({"suggested_display_precision": _data.get(PRECISION)})
+            params["precision"] = _data.get(PRECISION)
+        elif control_type == ControlType.BINARY_SENSOR:
+            desc_cls = ModbusBinarySensorEntityDescription
+        elif control_type == ControlType.SWITCH:
+            desc_cls = ModbusSwitchEntityDescription
+            switch_data = _data.get("switch", {})
+            if not isinstance(switch_data, dict):
+                _LOGGER.warning("Switch configuration for %s should be a dictionary", entity)
+                return None
+            params["on"] = switch_data.get("on", 1)
+            params["off"] = switch_data.get("off", 0)
+        elif control_type == ControlType.SELECT:
+            desc_cls = ModbusSelectEntityDescription
+            params["select_options"] = _data.get(OPTIONS)
+            if not params["select_options"]:
+                _LOGGER.warning("Missing options for select")
+                return None
+        elif control_type == ControlType.NUMBER:
+            desc_cls = ModbusNumberEntityDescription
+            number_data = _data.get("number", {})
+            if not isinstance(number_data, dict):
+                _LOGGER.warning("Number configuration for %s should be a dictionary", entity)
+                return None
+            if "min" not in number_data or "max" not in number_data:
+                _LOGGER.warning("Missing min or max for number in %s", entity)
+                return None
+            params["min"] = number_data["min"]
+            params["max"] = number_data["max"]
+            params["precision"] = _data.get(PRECISION)
+        elif control_type == ControlType.TEXT:
+            desc_cls = ModbusTextEntityDescription
+        else:
+            _LOGGER.warning("Unsupported control_type %s", control_type)
+            return None
 
-            desc: DESCRIPTION_TYPE = desc_cls(
-                **{k: params[k] for k in params if params[k] is not None}
-            )
-
-            return desc
-
-        except TypeError:
-            _LOGGER.error(
-                "Unable to create entry %s: missing required values",
-                entity,
-                exc_info=True,
-            )
-            return
-
-    def _create_descriptions(
-        self, config: dict[str, Any], holding=False
-    ) -> tuple[DESCRIPTION_TYPE, ...]:
-        """Create the entity descriptions for the device"""
-        descriptions: list[DESCRIPTION_TYPE] = []
-        for entity in config:
-            if isinstance(config[entity], dict):
-                _data: dict[str, Any] = config[entity]
-
-                uom: dict[str, str | None] = self.get_uom(_data)
-
-                params: dict[str, Any] = {
-                    "key": entity,
-                    "name": _data.get(TITLE, entity),
-                    "register_address": _data.get(REGISTER_ADDRESS),
-                    "register_count": _data.get(REGISTER_COUNT),
-                    "register_multiplier": _data.get(REGISTER_MULTIPLIER),
-                    "register_map": _data.get(REGISTER_MAP),
-                    "icon": _data.get(ICON),
-                    "string": _data.get(IS_STRING),
-                    "float": _data.get(IS_FLOAT),
-                    "bits": _data.get(BITS),
-                    "bit_shift": _data.get(SHIFT),
-                    "flags": _data.get(FLAGS),
-                    "never_resets": _data.get(NEVER_RESETS, False),
-                    "holding_register": holding,
-                    "control_type": _data.get(CONTROL_TYPE, ControlType.SENSOR),
-                    **uom,
-                }
-
-                try:
-                    params["entity_category"] = EntityCategory(_data.get(CATEGORY))
-                except ValueError:
-                    pass
-
-                desc: None | DESCRIPTION_TYPE = self._get_description_class(
-                    entity, params, holding, _data
-                )
-
-                if not desc or not desc.validate():
-                    continue
-
-                descriptions.append(desc)
-
-        return tuple(descriptions)
+        if desc_cls:
+            desc = desc_cls(**{k: v for k, v in params.items() if v is not None})
+            if desc.validate():
+                return desc
+        return None
