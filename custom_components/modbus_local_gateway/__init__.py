@@ -25,7 +25,8 @@ async def async_setup_entry(
     """Load the saved entities."""
     if DOMAIN not in hass.data:
         hass.data[DOMAIN] = {}
-    gateway_key: str = get_gateway_key(entry=entry)
+    # gateway_key: str = get_gateway_key(entry=entry)
+    gateway_key: str = get_gateway_key(entry=entry, with_slave=False)
 
     device_registry: dr.DeviceRegistry = dr.async_get(hass)
 
@@ -43,7 +44,8 @@ async def async_setup_entry(
             )
         )
         if client is not None:
-            hass.data[DOMAIN][gateway_key] = ModbusCoordinator(
+            # hass.data[DOMAIN][gateway_key] = ModbusCoordinator(
+            hass.data[DOMAIN][get_gateway_key(entry=entry)] = ModbusCoordinator(
                 hass=hass,
                 gateway_device=device,
                 client=client,
