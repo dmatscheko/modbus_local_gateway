@@ -85,15 +85,36 @@ class AsyncModbusTcpClientGateway(AsyncModbusTcpClient):
 
 
     async def _custom_write_registers(self, address: int, values: List[int], slave: int) -> None:
-        """Emulate write_registers by making multiple write_register calls. This is necessary because some Modbus Slaves only support writing single registers."""
-        for i, value in enumerate(values):
-            current_address = address + i
-            _LOGGER.debug(f"Writing value {value} to register at address {current_address}, slave {slave}")
-            result = await self.write_register(address=current_address, value=value, slave=slave)
+        """Write values to Modbus registers. Try write_registers first, and fall back to individual write_register calls if it fails."""
+        if len(values) == 0:
+            _LOGGER.debug("No values to write, skipping.")
+            return
+
+        if len(values) == 1:
+            # Single value: use write_register directly
+            _LOGGER.debug(f"Writing single value {values[0]} to register at address {address}, slave {slave}")
+            result = await self.write_register(address=address, value=values[0], slave=slave)
             if result.isError():
-                _LOGGER.error(f"Failed to write value {value} to address {current_address}: {result}")
-                return
-            _LOGGER.debug(f"Writing successful")
+                _LOGGER.error(f"Failed to write value {values[0]} to address {address}: {result}")
+            else:
+                _LOGGER.debug("Writing successful")
+        else:
+            # Multiple values: try write_registers first # TODO: if that fails, remember for that address, port and slave to always use the fallback method
+            _LOGGER.debug(f"Attempting to write multiple values {values} starting at address {address}, slave {slave} using write_registers")
+            result = await self.write_registers(address=address, values=values, slave=slave)
+            if result.isError():
+                _LOGGER.warning(f"Failed to write multiple values using write_registers: {result}. Falling back to old method (individual write_register calls).")
+                # Fallback method: individual write_register calls
+                for i, value in enumerate(values):
+                    current_address = address + i
+                    _LOGGER.debug(f"Writing value {value} to register at address {current_address}, slave {slave}")
+                    result = await self.write_register(address=current_address, value=value, slave=slave)
+                    if result.isError():
+                        _LOGGER.error(f"Failed to write value {value} to address {current_address}: {result}")
+                        return
+                _LOGGER.debug("All individual writes successful using fallback")
+            else:
+                _LOGGER.debug("Writing multiple values using write_registers successful")
 
 
     async def write_data(self, entity: ModbusContext, value: Any) -> ModbusPDU:
