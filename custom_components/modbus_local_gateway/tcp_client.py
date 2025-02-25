@@ -101,7 +101,7 @@ class AsyncModbusTcpClientGateway(AsyncModbusTcpClient):
         )
         if entity.desc.data_type == ModbusDataType.HOLDING_REGISTER:
             from .sensor_types.conversion import Conversion
-            registers = Conversion(type(self)).convert_to_registers(value, entity.desc)
+            registers = Conversion(type(self)).convert_to_registers(entity.desc, value)
             if isinstance(registers, int):
                 registers = [registers]
             if len(registers) == entity.desc.register_count:
