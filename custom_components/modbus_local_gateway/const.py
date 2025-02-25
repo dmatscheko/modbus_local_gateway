@@ -4,24 +4,13 @@ from homeassistant.const import Platform
 
 DOMAIN = "modbus_local_gateway"
 
-# PLATFORMS: list[Platform] = [
-#     Platform.SENSOR,
-#     Platform.BINARY_SENSOR,
-#     Platform.NUMBER,
-#     Platform.SELECT,
-#     Platform.SWITCH,
-#     Platform.TEXT,
-# ]
-
-TYPES_DIR = "entity_types."
-
-PLATFORMS: list[str] = [
-    TYPES_DIR + Platform.SENSOR,
-    TYPES_DIR + Platform.BINARY_SENSOR,
-    TYPES_DIR + Platform.NUMBER,
-    TYPES_DIR + Platform.SELECT,
-    TYPES_DIR + Platform.SWITCH,
-    TYPES_DIR + Platform.TEXT,
+PLATFORMS: list[Platform] = [
+    Platform.SENSOR,
+    Platform.BINARY_SENSOR,
+    Platform.NUMBER,
+    Platform.SELECT,
+    Platform.SWITCH,
+    Platform.TEXT,
 ]
 
 CONF_SLAVE_ID = "slave_id"

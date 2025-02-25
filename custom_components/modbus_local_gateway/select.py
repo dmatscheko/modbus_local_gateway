@@ -11,13 +11,13 @@ from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers.device_registry import DeviceInfo
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
-from ..coordinator import ModbusContext, ModbusCoordinator, ModbusCoordinatorEntity
-from ..helpers import async_setup_entities
-from ..entity_management.base import (
+from .coordinator import ModbusContext, ModbusCoordinator, ModbusCoordinatorEntity
+from .helpers import async_setup_entities
+from .entity_management.base import (
     ModbusSelectEntityDescription,
     ModbusSensorEntityDescription,
 )
-from ..entity_management.const import ControlType
+from .entity_management.const import ControlType
 
 _LOGGER: logging.Logger = logging.getLogger(__name__)
 
