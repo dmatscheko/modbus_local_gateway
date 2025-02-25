@@ -85,6 +85,17 @@ class AsyncModbusTcpClientGateway(AsyncModbusTcpClient):
         return response
 
 
+    async def _custom_write_registers(self, address, values, slave):
+        """Emulate write_registers by making multiple write_register calls. This is necessary because some Modbus Slaves only support writing single registers."""
+        for i, value in enumerate(values):
+            current_address = address + i
+            _LOGGER.debug(f"Writing value {value} to register at address {current_address}, slave {slave}")
+            result = await self.write_register(address=current_address, value=value, slave=slave)
+            if result.isError():
+                _LOGGER.error(f"Failed to write value {value} to address {current_address}: {result}")
+                return
+
+
     async def write_data(self, entity: ModbusContext, value: Any) -> ModbusPDU:
         """Writes data to Holding Registers or Coils"""
         async with self.lock:
@@ -109,15 +120,15 @@ class AsyncModbusTcpClientGateway(AsyncModbusTcpClient):
                 _LOGGER.debug("Raw value after conversion to registers: %s (type: %s)", registers, type(registers).__name__)
                 if len(registers) != entity.desc.register_count:
                     raise ModbusException("Incorrect number of registers: expected %d, got %d", entity.desc.register_count, len(registers))
-                return await super().write_registers(
-                    entity.desc.register_address,
-                    registers,
+                return await self._custom_write_registers(
+                    address=entity.desc.register_address,
+                    values=registers,
                     slave=entity.slave_id,
                 )
             elif entity.desc.data_type == ModbusDataType.COIL:
                 if not isinstance(value, bool):
                     raise TypeError("Value for COIL must be boolean, got %s", type(value).__name__)
-                return await super().write_coil(
+                return await self.write_coil(
                     entity.desc.register_address,
                     value,
                     slave=entity.slave_id,
@@ -127,7 +138,7 @@ class AsyncModbusTcpClientGateway(AsyncModbusTcpClient):
 
 
     async def update_slave(self, entities: list[ModbusContext], max_read_size: int) -> dict[str, ModbusPDU]:
-        """Retrieves all values for a single slave"""
+        """Fetches all values for a single slave"""
         data: dict[str, ModbusPDU] = {}
         async with self.lock:
             if not self.connected:
