@@ -21,6 +21,7 @@ class AsyncModbusTcpClientGateway(AsyncModbusTcpClient):
     """Custom Modbus TCP client with request batching based on slave and locking."""
 
     _CLIENT: dict[str, AsyncModbusTcpClientGateway] = {}
+    _DATA_TYPE_TO_FUNC: dict[str, callable] = {}
 
     def __init__(
         self,
@@ -30,13 +31,13 @@ class AsyncModbusTcpClientGateway(AsyncModbusTcpClient):
         source_address: tuple[str, int] | None = None,
         **kwargs: Any,
     ) -> None:
-        super().__init__(
-            host=host,
-            port=port,
-            framer=framer,
-            source_address=source_address,
-            **kwargs,
-        )
+        self._DATA_TYPE_TO_FUNC = {
+            ModbusDataType.HOLDING_REGISTER: self.read_holding_registers,
+            ModbusDataType.INPUT_REGISTER: self.read_input_registers,
+            ModbusDataType.COIL: self.read_coils,
+            ModbusDataType.DISCRETE_INPUT: self.read_discrete_inputs
+        }
+        super().__init__(host=host, port=port, framer=framer, source_address=source_address, **kwargs)
         self.lock = asyncio.Lock()
 
 
@@ -85,42 +86,46 @@ class AsyncModbusTcpClientGateway(AsyncModbusTcpClient):
 
     async def write_data(self, entity: ModbusContext, value: Any) -> ModbusPDU:
         """Writes data to Holding Registers or Coils"""
-        _LOGGER.debug(
-            "Starting write operation - Slave: %d, %s (%s): %d, Count: %d",
-            entity.slave_id,
-            entity.desc.data_type,
-            entity.desc.key,
-            entity.desc.register_address,
-            entity.desc.register_count,
-        )
-        _LOGGER.debug("Value before conversion: %s (type: %s)", value, type(value).__name__)
-        if entity.desc.data_type == ModbusDataType.HOLDING_REGISTER:
-            from .conversion import Conversion
-            registers = Conversion(type(self)).convert_to_registers(entity.desc, value)
-            _LOGGER.debug("Raw value after conversion to registers: %s (type: %s)", registers, type(registers).__name__)
-            if len(registers) == entity.desc.register_count:
-                return await super().write_registers(
+        async with self.lock:
+            await self.connect()
+            if not self.connected:
+                _LOGGER.warning("Failed to connect to gateway - %s", self)
+                return None
+
+            _LOGGER.debug(
+                "Starting write operation - Slave: %d, %s (%s): %d, Count: %d",
+                entity.slave_id,
+                entity.desc.data_type,
+                entity.desc.key,
+                entity.desc.register_address,
+                entity.desc.register_count,
+            )
+            _LOGGER.debug("Value before conversion: %s (type: %s)", value, type(value).__name__)
+            if entity.desc.data_type == ModbusDataType.HOLDING_REGISTER:
+                from .conversion import Conversion
+                registers = Conversion(type(self)).convert_to_registers(entity.desc, value)
+                _LOGGER.debug("Raw value after conversion to registers: %s (type: %s)", registers, type(registers).__name__)
+                if len(registers) == entity.desc.register_count:
+                    return await super().write_registers(
+                        entity.desc.register_address,
+                        registers,
+                        slave=entity.slave_id,
+                    )
+                else:
+                    raise ModbusException("Incorrect number of registers: expected %d, got %d", entity.desc.register_count, len(registers))
+            elif entity.desc.data_type == ModbusDataType.COIL:
+                if not isinstance(value, bool):
+                    raise TypeError("Value for COIL must be boolean, got %s", type(value).__name__)
+                return await super().write_coil(
                     entity.desc.register_address,
-                    registers,
+                    value,
                     slave=entity.slave_id,
                 )
             else:
-                raise ModbusException("Incorrect number of registers: expected %d, got %d", entity.desc.register_count, len(registers))
-        elif entity.desc.data_type == ModbusDataType.COIL:
-            if not isinstance(value, bool):
-                raise TypeError("Value for COIL must be boolean, got %s", type(value).__name__)
-            return await super().write_coil(
-                entity.desc.register_address,
-                value,
-                slave=entity.slave_id,
-            )
-        else:
-            raise ValueError("Unsupported data type: %s", entity.desc.data_type)
+                raise ValueError("Unsupported data type: %s", entity.desc.data_type)
 
 
-    async def update_slave(
-        self, entities: list[ModbusContext], max_read_size: int
-    ) -> dict[str, ModbusPDU]:
+    async def update_slave(self, entities: list[ModbusContext], max_read_size: int) -> dict[str, ModbusPDU]:
         """Retrieves all values for a single slave"""
         data: dict[str, ModbusPDU] = {}
         async with self.lock:
@@ -130,31 +135,22 @@ class AsyncModbusTcpClientGateway(AsyncModbusTcpClient):
                 return data
 
             for idx, entity in enumerate(entities):
+                _LOGGER.debug(
+                    "Reading slave: %d, register/coil (%s): %d, count: %d",
+                    entity.slave_id,
+                    entity.desc.key,
+                    entity.desc.register_address,
+                    entity.desc.register_count,
+                )
+                func = self._DATA_TYPE_TO_FUNC.get(entity.desc.data_type)
+                if func is None:
+                    raise ValueError("Invalid data type")
+
                 try:
-                    count = entity.desc.register_count
-                    if entity.desc.data_type == ModbusDataType.HOLDING_REGISTER:
-                        func = self.read_holding_registers
-                    elif entity.desc.data_type == ModbusDataType.INPUT_REGISTER:
-                        func = self.read_input_registers
-                    elif entity.desc.data_type == ModbusDataType.COIL:
-                        func = self.read_coils
-                    elif entity.desc.data_type == ModbusDataType.DISCRETE_INPUT:
-                        func = self.read_discrete_inputs
-                    else:
-                        raise ValueError("Invalid data type")
-
-                    _LOGGER.debug(
-                        "Reading slave: %d, register/coil (%s): %d, count: %d",
-                        entity.slave_id,
-                        entity.desc.key,
-                        entity.desc.register_address,
-                        count,
-                    )
-
                     modbus_response: ModbusPDU | None = await self.read_data(
                         func=func,
                         address=entity.desc.register_address,
-                        count=count,
+                        count=entity.desc.register_count,
                         slave=entity.slave_id,
                         max_read_size=max_read_size,
                     )
@@ -162,14 +158,12 @@ class AsyncModbusTcpClientGateway(AsyncModbusTcpClient):
                     if modbus_response and not modbus_response.isError():
                         data[entity.desc.key] = modbus_response
                     else:
-                        _LOGGER.debug(
-                            "Error reading %s", entity.desc.key
-                        )
+                        _LOGGER.debug("Error reading %s", entity.desc.key)
 
                 except (ModbusException, TimeoutError):
                     if idx == 0:
                         _LOGGER.warning(
-                            "Closing connection - Device not available %s [%d]",
+                            "Device not available %s [%d]",
                             self,
                             entity.slave_id,
                         )
@@ -182,16 +176,13 @@ class AsyncModbusTcpClientGateway(AsyncModbusTcpClient):
                         entity.desc.register_count,
                     )
 
-            _LOGGER.debug("Closing connection - Update completed %s", self)
+            _LOGGER.debug("Update completed %s", self)
 
         return data
 
+
     @classmethod
-    def async_get_client_connection(
-        cls,
-        host: str,
-        port: int,
-    ) -> AsyncModbusTcpClientGateway:
+    def async_get_client_connection(cls, host: str, port: int) -> AsyncModbusTcpClientGateway:
         """Gets a modbus client object"""
         key: str = f"{host}:{port}"
         if key not in cls._CLIENT:
