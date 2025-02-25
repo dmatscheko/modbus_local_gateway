@@ -5,9 +5,9 @@ from unittest.mock import patch
 import pytest
 import yaml
 
-from custom_components.modbus_local_gateway.sensor_types.device_loader import load_devices
-from custom_components.modbus_local_gateway.sensor_types.modbus_device_info import ModbusDeviceInfo
-from custom_components.modbus_local_gateway.sensor_types.const import ModbusDataType
+from custom_components.modbus_local_gateway.entity_management.device_loader import load_devices
+from custom_components.modbus_local_gateway.entity_management.modbus_device_info import ModbusDeviceInfo
+from custom_components.modbus_local_gateway.entity_management.const import ModbusDataType
 
 
 def test_entity_load() -> None:

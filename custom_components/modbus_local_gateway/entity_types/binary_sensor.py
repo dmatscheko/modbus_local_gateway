@@ -13,8 +13,8 @@ from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
 from .coordinator import ModbusContext, ModbusCoordinator, ModbusCoordinatorEntity
 from .helpers import async_setup_entities
-from .sensor_types.base import ModbusBinarySensorEntityDescription
-from .sensor_types.const import ControlType
+from .device_config.base import ModbusBinarySensorEntityDescription
+from .device_config.const import ControlType
 
 _LOGGER = logging.getLogger(__name__)
 

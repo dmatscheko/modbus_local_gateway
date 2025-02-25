@@ -13,9 +13,9 @@ from pymodbus.pdu.bit_message import (
     ReadDiscreteInputsResponse,
 )
 
-from ..tcp_client import AsyncModbusTcpClient
-from .base import ModbusEntityDescription
-from .const import ModbusDataType
+from .tcp_client import AsyncModbusTcpClient
+from .entity_management.base import ModbusEntityDescription
+from .entity_management.const import ModbusDataType
 
 _LOGGER: logging.Logger = logging.getLogger(__name__)
 

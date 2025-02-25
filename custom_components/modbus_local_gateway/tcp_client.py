@@ -12,7 +12,7 @@ from pymodbus.framer import FramerType
 from pymodbus.pdu.pdu import ModbusPDU
 
 from .context import ModbusContext
-from .sensor_types.const import ModbusDataType
+from .entity_management.const import ModbusDataType
 
 _LOGGER: logging.Logger = logging.getLogger(__name__)
 
@@ -95,7 +95,7 @@ class AsyncModbusTcpClientGateway(AsyncModbusTcpClient):
         )
         _LOGGER.debug("Value before conversion: %s (type: %s)", value, type(value).__name__)
         if entity.desc.data_type == ModbusDataType.HOLDING_REGISTER:
-            from .sensor_types.conversion import Conversion
+            from .conversion import Conversion
             registers = Conversion(type(self)).convert_to_registers(entity.desc, value)
             _LOGGER.debug("Raw value after conversion to registers: %s (type: %s)", registers, type(registers).__name__)
             if len(registers) == entity.desc.register_count:

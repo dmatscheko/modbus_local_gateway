@@ -13,9 +13,9 @@ from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
 from .const import CONF_PREFIX, CONF_SLAVE_ID, DOMAIN
 from .coordinator import ModbusContext, ModbusCoordinator, ModbusCoordinatorEntity
-from .sensor_types.const import ControlType
-from .sensor_types.device_loader import create_device_info
-from .sensor_types.modbus_device_info import ModbusDeviceInfo
+from .entity_management.const import ControlType
+from .entity_management.device_loader import create_device_info
+from .entity_management.modbus_device_info import ModbusDeviceInfo
 
 _LOGGER: logging.Logger = logging.getLogger(__name__)
 

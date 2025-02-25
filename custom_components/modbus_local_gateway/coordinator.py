@@ -17,8 +17,8 @@ from homeassistant.helpers.update_coordinator import (
 from pymodbus.pdu.pdu import ModbusPDU
 
 from .context import ModbusContext
-from .sensor_types.base import ModbusEntityDescription
-from .sensor_types.conversion import Conversion
+from .entity_management.base import ModbusEntityDescription
+from .conversion import Conversion
 from .tcp_client import AsyncModbusTcpClientGateway
 
 _LOGGER: logging.Logger = logging.getLogger(__name__)

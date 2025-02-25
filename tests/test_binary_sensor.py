@@ -11,10 +11,10 @@ from custom_components.modbus_local_gateway.binary_sensor import (
     ModbusBinarySensorEntity,
     async_setup_entry,
 )
-from custom_components.modbus_local_gateway.sensor_types.base import (
+from custom_components.modbus_local_gateway.entity_management.base import (
     ModbusBinarySensorEntityDescription,
 )
-from custom_components.modbus_local_gateway.sensor_types.modbus_device_info import (
+from custom_components.modbus_local_gateway.entity_management.modbus_device_info import (
     ModbusDeviceInfo,
 )
 

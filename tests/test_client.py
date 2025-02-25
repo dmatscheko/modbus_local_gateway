@@ -14,7 +14,7 @@ from pymodbus.pdu.bit_message import (
 )
 
 from custom_components.modbus_local_gateway.context import ModbusContext
-from custom_components.modbus_local_gateway.sensor_types.base import (
+from custom_components.modbus_local_gateway.entity_management.base import (
     ModbusSensorEntityDescription,
     ModbusSwitchEntityDescription,
     ModbusBinarySensorEntityDescription,

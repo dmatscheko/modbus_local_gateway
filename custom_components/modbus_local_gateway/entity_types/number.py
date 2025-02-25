@@ -1,20 +1,24 @@
-"""Modbus Local Gateway text control"""
+"""Modbus Local Gateway number control"""
 
 from __future__ import annotations
 
 import logging
 from typing import cast
 
-from homeassistant.components.text import TextEntity
+from homeassistant.components.number import NumberEntity, NumberMode
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant, callback
+from homeassistant.helpers.device_registry import DeviceInfo
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
-from .coordinator import ModbusCoordinator, ModbusCoordinatorEntity
+from .coordinator import ModbusContext, ModbusCoordinator, ModbusCoordinatorEntity
 from .helpers import async_setup_entities
-from .sensor_types.base import ModbusSensorEntityDescription
-from .sensor_types.const import ControlType
-from .sensor_types.conversion import Conversion
+from .device_config.base import (
+    ModbusNumberEntityDescription,
+    ModbusSensorEntityDescription,
+)
+from .device_config.const import ControlType
+from .device_config.conversion import Conversion
 
 _LOGGER: logging.Logger = logging.getLogger(__name__)
 
@@ -29,13 +33,28 @@ async def async_setup_entry(
         hass=hass,
         config_entry=config_entry,
         async_add_entities=async_add_entities,
-        control=ControlType.TEXT,
-        entity_class=ModbusTextEntity,
+        control=ControlType.NUMBER,
+        entity_class=ModbusNumberEntity,
     )
 
 
-class ModbusTextEntity(ModbusCoordinatorEntity, TextEntity):  # type: ignore
-    """Text entity for Modbus gateway"""
+class ModbusNumberEntity(ModbusCoordinatorEntity, NumberEntity):  # type: ignore
+    """Number entity for Modbus gateway"""
+
+    def __init__(
+        self,
+        coordinator: ModbusCoordinator,
+        ctx: ModbusContext,
+        device: DeviceInfo,
+    ) -> None:
+        """Initialize a PVOutput number."""
+        super().__init__(coordinator, ctx=ctx, device=device)
+        if isinstance(ctx.desc, ModbusNumberEntityDescription):
+            self._attr_native_max_value = ctx.desc.max
+            self._attr_native_min_value = ctx.desc.min
+        else:
+            raise TypeError()
+        self._attr_mode = NumberMode.BOX
 
     @callback
     def _handle_coordinator_update(self) -> None:
@@ -45,7 +64,7 @@ class ModbusTextEntity(ModbusCoordinatorEntity, TextEntity):  # type: ignore
                 ModbusCoordinator, self.coordinator
             ).get_data(self.coordinator_context)
             if value is not None:
-                self._attr_native_value = str(value)
+                self._attr_native_value = float(value)
                 _LOGGER.debug(
                     "Updating device with %s as %s",
                     self.entity_description.key,
@@ -56,11 +75,11 @@ class ModbusTextEntity(ModbusCoordinatorEntity, TextEntity):  # type: ignore
         except Exception as err:  # pylint: disable=broad-exception-caught
             _LOGGER.error("Unable to get data for %s %s", self.name, err)
 
-    def set_value(self, value: str) -> None:
+    def set_native_value(self, value: float) -> None:
         """Set new value."""
         raise NotImplementedError()
 
-    async def async_set_value(self, value: str) -> None:
+    async def async_set_native_value(self, value: float) -> None:
         """Set new value."""
         if isinstance(self.coordinator, ModbusCoordinator):
             await self.coordinator.client.write_data(self.coordinator_context, value)

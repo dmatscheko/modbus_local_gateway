@@ -28,8 +28,8 @@ from .const import (
 )
 from .coordinator import ModbusCoordinator
 from .helpers import get_gateway_key
-from .sensor_types.device_loader import create_device_info, load_devices
-from .sensor_types.modbus_device_info import ModbusDeviceInfo
+from .entity_management.device_loader import create_device_info, load_devices
+from .entity_management.modbus_device_info import ModbusDeviceInfo
 from .tcp_client import AsyncModbusTcpClientGateway
 
 _LOGGER: logging.Logger = logging.getLogger(__name__)

@@ -7,10 +7,10 @@ from pytest_homeassistant_custom_component.common import MockConfigEntry
 
 from custom_components.modbus_local_gateway.const import DOMAIN
 from custom_components.modbus_local_gateway.context import ModbusContext
-from custom_components.modbus_local_gateway.sensor_types.base import (
+from custom_components.modbus_local_gateway.entity_management.base import (
     ModbusSwitchEntityDescription,
 )
-from custom_components.modbus_local_gateway.sensor_types.modbus_device_info import (
+from custom_components.modbus_local_gateway.entity_management.modbus_device_info import (
     ModbusDeviceInfo,
 )
 from custom_components.modbus_local_gateway.switch import (

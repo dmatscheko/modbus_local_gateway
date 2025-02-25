@@ -1,9 +1,9 @@
 """Conversion Tests"""
 
-from custom_components.modbus_local_gateway.sensor_types.base import (
+from custom_components.modbus_local_gateway.entity_management.base import (
     ModbusSensorEntityDescription,
 )
-from custom_components.modbus_local_gateway.sensor_types.conversion import Conversion
+from custom_components.modbus_local_gateway.conversion import Conversion
 from custom_components.modbus_local_gateway.tcp_client import AsyncModbusTcpClient
 
 

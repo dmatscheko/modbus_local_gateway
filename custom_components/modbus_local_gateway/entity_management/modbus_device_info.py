@@ -11,7 +11,7 @@ from homeassistant.exceptions import HomeAssistantError
 from homeassistant.util.yaml import load_yaml
 from homeassistant.util.yaml.loader import JSON_TYPE
 
-from ..devices import CONFIG_DIR
+from ..device_configs import CONFIG_DIR
 from .base import (
     ModbusEntityDescription,
     ModbusNumberEntityDescription,

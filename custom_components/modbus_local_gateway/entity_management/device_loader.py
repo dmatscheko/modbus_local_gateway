@@ -6,7 +6,7 @@ import os.path
 
 from homeassistant.core import HomeAssistant
 
-from ..devices import CONFIG_DIR
+from ..device_configs import CONFIG_DIR
 from .modbus_device_info import ModbusDeviceInfo
 
 _LOGGER: logging.Logger = logging.getLogger(__name__)
