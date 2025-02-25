@@ -93,34 +93,72 @@ class AsyncModbusTcpClientGateway(AsyncModbusTcpClient):
     async def write_data(self, entity: ModbusContext, value: Any) -> ModbusPDU:
         """Writes data to Holding Registers or Coils"""
         _LOGGER.debug(
-            "Writing slave: %d, register (%s): %d, count: %d",
+            "Starting write operation - Slave: %d, Register/Coil (%s): %d, Count: %d",
             entity.slave_id,
             entity.desc.key,
             entity.desc.register_address,
             entity.desc.register_count,
         )
+        _LOGGER.debug("Modbus Data Type: %s", entity.desc.data_type)
+        _LOGGER.debug("Value before conversion: %s (type: %s)", value, type(value).__name__)
+
         if entity.desc.data_type == ModbusDataType.HOLDING_REGISTER:
+            _LOGGER.debug("Entering HOLDING_REGISTER branch")
             from .sensor_types.conversion import Conversion
             registers = Conversion(type(self)).convert_to_registers(entity.desc, value)
+            _LOGGER.debug("Value after conversion to registers: %s (type: %s)", registers, type(registers).__name__)
             if isinstance(registers, int):
+                _LOGGER.debug("Converted single integer to list: %d", registers)
                 registers = [registers]
+            _LOGGER.debug("Final registers to write: %s", registers)
             if len(registers) == entity.desc.register_count:
-                return await super().write_registers(
+                _LOGGER.debug(
+                    "Writing %d registers to address %d for slave %d",
+                    len(registers),
+                    entity.desc.register_address,
+                    entity.slave_id,
+                )
+                response = await super().write_registers(
                     entity.desc.register_address,
                     registers,
                     slave=entity.slave_id,
                 )
+                if response.isError():
+                    _LOGGER.error("Write to HOLDING_REGISTER failed: %s", response)
+                else:
+                    _LOGGER.debug("Write to HOLDING_REGISTER succeeded: %s", response)
+                return response
             else:
+                _LOGGER.error(
+                    "Incorrect number of registers: expected %d, got %d",
+                    entity.desc.register_count,
+                    len(registers),
+                )
                 raise ModbusException("Incorrect number of registers")
         elif entity.desc.data_type == ModbusDataType.COIL:
+            _LOGGER.debug("Entering COIL branch")
+            _LOGGER.debug("Value for COIL: %s (type: %s)", value, type(value).__name__)
             if not isinstance(value, bool):
+                _LOGGER.error("Value for COIL must be boolean, got %s", type(value).__name__)
                 raise TypeError("Value must be boolean for coil")
-            return await super().write_coil(
+            _LOGGER.debug(
+                "Writing COIL value %s to address %d for slave %d",
+                value,
+                entity.desc.register_address,
+                entity.slave_id,
+            )
+            response = await super().write_coil(
                 entity.desc.register_address,
                 value,
                 slave=entity.slave_id,
             )
+            if response.isError():
+                _LOGGER.error("Write to COIL failed: %s", response)
+            else:
+                _LOGGER.debug("Write to COIL succeeded: %s", response)
+            return response
         else:
+            _LOGGER.error("Unsupported data type: %s", entity.desc.data_type)
             raise ValueError("Cannot write to this data type")
 
 
