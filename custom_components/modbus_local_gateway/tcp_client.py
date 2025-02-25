@@ -93,6 +93,7 @@ class AsyncModbusTcpClientGateway(AsyncModbusTcpClient):
             if result.isError():
                 _LOGGER.error(f"Failed to write value {value} to address {current_address}: {result}")
                 return
+            _LOGGER.debug(f"Writing successful")
 
 
     async def write_data(self, entity: ModbusContext, value: Any) -> ModbusPDU:
