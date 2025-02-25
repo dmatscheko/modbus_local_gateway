@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import asyncio
 import logging
-from typing import Any
+from typing import Any, List
 
 from pymodbus.client import AsyncModbusTcpClient
 from pymodbus.exceptions import ModbusException
@@ -85,7 +85,7 @@ class AsyncModbusTcpClientGateway(AsyncModbusTcpClient):
         return response
 
 
-    async def _custom_write_registers(self, address, values, slave):
+    async def _custom_write_registers(self, address: int, values: List[int], slave: int) -> None:
         """Emulate write_registers by making multiple write_register calls. This is necessary because some Modbus Slaves only support writing single registers."""
         for i, value in enumerate(values):
             current_address = address + i
