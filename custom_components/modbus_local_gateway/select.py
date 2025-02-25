@@ -95,13 +95,4 @@ class ModbusSelectEntity(ModbusCoordinatorEntity, SelectEntity):  # type: ignore
             value: int = list(self.entity_description.select_options.keys())[
                 list(self.entity_description.select_options.values()).index(option)
             ]
-            registers: list[int] | int = Conversion(
-                type(self.coordinator.client)
-            ).convert_to_registers(
-                value=value,
-                desc=cast(ModbusSensorEntityDescription, self.entity_description),
-            )
-
-            await self.coordinator.client.write_holding_registers(
-                entity=self.coordinator_context, value=registers
-            )
+            await self.coordinator.client.write_data(self.coordinator_context, value)
