@@ -13,6 +13,7 @@ from pymodbus.pdu.pdu import ModbusPDU
 
 from .context import ModbusContext
 from .entity_management.const import ModbusDataType
+from .conversion import Conversion
 
 _LOGGER: logging.Logger = logging.getLogger(__name__)
 
@@ -87,10 +88,11 @@ class AsyncModbusTcpClientGateway(AsyncModbusTcpClient):
     async def write_data(self, entity: ModbusContext, value: Any) -> ModbusPDU:
         """Writes data to Holding Registers or Coils"""
         async with self.lock:
-            await self.connect()
             if not self.connected:
-                _LOGGER.warning("Failed to connect to gateway - %s", self)
-                return None
+                await self.connect()
+                if not self.connected:
+                    _LOGGER.warning("Failed to connect to gateway - %s", self)
+                    return None
 
             _LOGGER.debug(
                 "Starting write operation - Slave: %d, %s (%s): %d, Count: %d",
@@ -101,18 +103,17 @@ class AsyncModbusTcpClientGateway(AsyncModbusTcpClient):
                 entity.desc.register_count,
             )
             _LOGGER.debug("Value before conversion: %s (type: %s)", value, type(value).__name__)
+
             if entity.desc.data_type == ModbusDataType.HOLDING_REGISTER:
-                from .conversion import Conversion
                 registers = Conversion(type(self)).convert_to_registers(entity.desc, value)
                 _LOGGER.debug("Raw value after conversion to registers: %s (type: %s)", registers, type(registers).__name__)
-                if len(registers) == entity.desc.register_count:
-                    return await super().write_registers(
-                        entity.desc.register_address,
-                        registers,
-                        slave=entity.slave_id,
-                    )
-                else:
+                if len(registers) != entity.desc.register_count:
                     raise ModbusException("Incorrect number of registers: expected %d, got %d", entity.desc.register_count, len(registers))
+                return await super().write_registers(
+                    entity.desc.register_address,
+                    registers,
+                    slave=entity.slave_id,
+                )
             elif entity.desc.data_type == ModbusDataType.COIL:
                 if not isinstance(value, bool):
                     raise TypeError("Value for COIL must be boolean, got %s", type(value).__name__)
@@ -129,10 +130,11 @@ class AsyncModbusTcpClientGateway(AsyncModbusTcpClient):
         """Retrieves all values for a single slave"""
         data: dict[str, ModbusPDU] = {}
         async with self.lock:
-            await self.connect()
             if not self.connected:
-                _LOGGER.warning("Failed to connect to gateway - %s", self)
-                return data
+                await self.connect()
+                if not self.connected:
+                    _LOGGER.warning("Failed to connect to gateway - %s", self)
+                    return data
 
             for idx, entity in enumerate(entities):
                 _LOGGER.debug(
