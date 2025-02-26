@@ -47,7 +47,7 @@ read_write_word: # Holding registers
       0: Aus
       1: An
     icon: mdi:dip-switch
-    category: diagnostic
+    entity_category: diagnostic
     entity_registry_enabled_default: False # TODO: Implement this by passing unknown attributes right through
 
   co2_regelung_select:
@@ -58,7 +58,7 @@ read_write_word: # Holding registers
       0: Aus
       1: An
     icon: mdi:dip-switch
-    category: diagnostic
+    entity_category: diagnostic
     entity_registry_enabled_default: False # TODO: Implement this
 
   # Buttons (represented as a select for register 33)
@@ -194,7 +194,7 @@ read_write_word: # Holding registers
     unit_of_measurement: "%"
     device_class: humidity
     icon: mdi:thermometer
-    category: diagnostic
+    entity_category: diagnostic
     entity_registry_enabled_default: False # TODO: Implement this
 
   co2_maximum_number:
@@ -208,7 +208,7 @@ read_write_word: # Holding registers
     unit_of_measurement: ppm
     device_class: co2
     icon: mdi:thermometer
-    category: diagnostic
+    entity_category: diagnostic
     entity_registry_enabled_default: False # TODO: Implement this
 
   # Sensors (all commented out because they are represented by the editable entities)
@@ -220,7 +220,7 @@ read_write_word: # Holding registers
   #     1: Sommer
   #     2: Winter
   #   icon: mdi:dip-switch
-  #   category: diagnostic
+  #   entity_category: diagnostic
   #   entity_registry_enabled_default: False # TODO: Implement this
 
   # luftungsstufe_sensor:
@@ -233,7 +233,7 @@ read_write_word: # Holding registers
   #     3: Stufe 3
   #     4: Grundlüftung
   #   icon: mdi:fan
-  #   category: diagnostic
+  #   entity_category: diagnostic
   #   entity_registry_enabled_default: False # TODO: Implement this
 
   # temperaturregelungsart_sensor:
@@ -244,7 +244,7 @@ read_write_word: # Holding registers
   #     2: Zuluft
   #     3: Raum
   #   icon: mdi:thermometer-lines
-  #   category: diagnostic
+  #   entity_category: diagnostic
   #   entity_registry_enabled_default: False # TODO: Implement this
 
   # volumenstrom_luftungsstufe_1_sensor:
@@ -253,7 +253,7 @@ read_write_word: # Holding registers
   #   multiplier: 10
   #   unit_of_measurement: m³/h
   #   icon: mdi:fan-speed-1
-  #   category: diagnostic
+  #   entity_category: diagnostic
   #   entity_registry_enabled_default: False # TODO: Implement this
 
   # volumenstrom_luftungsstufe_2_sensor:
@@ -262,7 +262,7 @@ read_write_word: # Holding registers
   #   multiplier: 10
   #   unit_of_measurement: m³/h
   #   icon: mdi:fan-speed-2
-  #   category: diagnostic
+  #   entity_category: diagnostic
   #   entity_registry_enabled_default: False # TODO: Implement this
 
   # volumenstrom_luftungsstufe_3_sensor:
@@ -271,7 +271,7 @@ read_write_word: # Holding registers
   #   multiplier: 10
   #   unit_of_measurement: m³/h
   #   icon: mdi:fan-speed-3
-  #   category: diagnostic
+  #   entity_category: diagnostic
   #   entity_registry_enabled_default: False # TODO: Implement this
 
   # volumenstrom_grundluftung_sensor:
@@ -280,7 +280,7 @@ read_write_word: # Holding registers
   #   multiplier: 10
   #   unit_of_measurement: m³/h
   #   icon: mdi:fan
-  #   category: diagnostic
+  #   entity_category: diagnostic
   #   entity_registry_enabled_default: False # TODO: Implement this
 
   # timer_luftungsstufe_3_sensor:
@@ -288,7 +288,7 @@ read_write_word: # Holding registers
   #   address: 70
   #   unit_of_measurement: minutes
   #   icon: mdi:fan-clock
-  #   category: diagnostic
+  #   entity_category: diagnostic
   #   entity_registry_enabled_default: False # TODO: Implement this
 
   # soll_zulufttemperatur_sensor:
@@ -301,7 +301,7 @@ read_write_word: # Holding registers
   #   device_class: temperature
   #   state_class: measurement
   #   icon: mdi:thermometer
-  #   category: diagnostic
+  #   entity_category: diagnostic
   #   entity_registry_enabled_default: False # TODO: Implement this
 
   # soll_raumlufttemperatur_sensor:
@@ -314,7 +314,7 @@ read_write_word: # Holding registers
   #   device_class: temperature
   #   state_class: measurement
   #   icon: mdi:thermometer
-  #   category: diagnostic
+  #   entity_category: diagnostic
   #   entity_registry_enabled_default: False # TODO: Implement this
 
   # soll_ablufttemperatur_sensor:
@@ -327,7 +327,7 @@ read_write_word: # Holding registers
   #   device_class: temperature
   #   state_class: measurement
   #   icon: mdi:thermometer
-  #   category: diagnostic
+  #   entity_category: diagnostic
   #   entity_registry_enabled_default: False # TODO: Implement this
 
   # luftfeuchtigkeit_regelung_sensor:
@@ -337,7 +337,7 @@ read_write_word: # Holding registers
   #     0: Aus
   #     1: An
   #   icon: mdi:dip-switch
-  #   category: diagnostic
+  #   entity_category: diagnostic
   #   entity_registry_enabled_default: False # TODO: Implement this
 
   # co2_regelung_sensor:
@@ -347,7 +347,7 @@ read_write_word: # Holding registers
   #     0: Aus
   #     1: An
   #   icon: mdi:dip-switch
-  #   category: diagnostic
+  #   entity_category: diagnostic
   #   entity_registry_enabled_default: False # TODO: Implement this
 
   # luftfeuchtigkeit_maximum_sensor:
@@ -356,7 +356,7 @@ read_write_word: # Holding registers
   #   unit_of_measurement: "%"
   #   device_class: humidity
   #   icon: mdi:thermometer
-  #   category: diagnostic
+  #   entity_category: diagnostic
   #   entity_registry_enabled_default: False # TODO: Implement this
 
   # co2_maximum_sensor:
@@ -365,7 +365,7 @@ read_write_word: # Holding registers
   #   unit_of_measurement: ppm
   #   device_class: co2
   #   icon: mdi:thermometer
-  #   category: diagnostic
+  #   entity_category: diagnostic
   #   entity_registry_enabled_default: False # TODO: Implement this
 
 
@@ -444,7 +444,7 @@ read_only_word: # Input registers
     device_class: temperature
     state_class: measurement
     icon: mdi:thermometer
-    category: diagnostic
+    entity_category: diagnostic
     entity_registry_enabled_default: False # TODO: Implement this
 
   zuluftventilator_drehzahl:
@@ -556,7 +556,7 @@ read_only_word: # Input registers
     unit_of_measurement: hours
     state_class: total
     icon: mdi:timer-sand
-    category: diagnostic
+    entity_category: diagnostic
     entity_registry_enabled_default: False # TODO: Implement this
 
   position_bypassklappe:
@@ -576,7 +576,7 @@ read_only_word: # Input registers
     device_class: humidity
     state_class: measurement
     icon: mdi:water
-    category: diagnostic
+    entity_category: diagnostic
     entity_registry_enabled_default: False # TODO: Implement this
 
   feuchtesensor_2:
@@ -586,7 +586,7 @@ read_only_word: # Input registers
     device_class: humidity
     state_class: measurement
     icon: mdi:water
-    category: diagnostic
+    entity_category: diagnostic
     entity_registry_enabled_default: False # TODO: Implement this
 
   co2_sensor_1:
@@ -596,7 +596,7 @@ read_only_word: # Input registers
     device_class: co2
     state_class: measurement
     icon: mdi:water
-    category: diagnostic
+    entity_category: diagnostic
     entity_registry_enabled_default: False # TODO: Implement this
 
   co2_sensor_2:
@@ -606,7 +606,7 @@ read_only_word: # Input registers
     device_class: co2
     state_class: measurement
     icon: mdi:water
-    category: diagnostic
+    entity_category: diagnostic
     entity_registry_enabled_default: False # TODO: Implement this
 
 

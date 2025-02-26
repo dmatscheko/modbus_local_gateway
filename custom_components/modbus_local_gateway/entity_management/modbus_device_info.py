@@ -23,7 +23,6 @@ from .base import (
 )
 from .const import (
     BITS,
-    CATEGORY,
     CONTROL_TYPE,
     DEFAULT_STATE_CLASS,
     DEVICE,
@@ -33,7 +32,6 @@ from .const import (
     TYPE_DISCRETE_INPUT,
     DEVICE_CLASS,
     FLAGS,
-    ICON,
     IS_FLOAT,
     IS_STRING,
     MANUFACTURER,
@@ -174,7 +172,11 @@ class ModbusDeviceInfo:
         }
         control_type = _data.get(CONTROL_TYPE, default_control_type[data_type])
 
-        params = {
+        # Start with all attributes from _data
+        params = dict(_data)
+
+        # Override or add required and computed fields
+        params.update({
             "key": entity,
             "name": _data.get(TITLE, entity),
             "register_address": _data.get(REGISTER_ADDRESS),
@@ -182,7 +184,6 @@ class ModbusDeviceInfo:
             "register_multiplier": _data.get(REGISTER_MULTIPLIER, 1.0),
             "register_offset": _data.get(REGISTER_OFFSET),
             "register_map": _data.get(REGISTER_MAP),
-            "icon": _data.get(ICON),
             "string": _data.get(IS_STRING, False),
             "float": _data.get(IS_FLOAT, False),
             "bits": _data.get(BITS),
@@ -194,11 +195,21 @@ class ModbusDeviceInfo:
             # Only include relevant uom keys based on control_type
             "native_unit_of_measurement": uom["native_unit_of_measurement"],
             "device_class": uom["device_class"],
-        }
-        # Only add state_class for sensors
+        })
+
+        # Add state_class for sensors only
         if control_type == ControlType.SENSOR:
             params["state_class"] = uom["state_class"]
 
+        # # Handle entity_category directly from _data
+        # if "entity_category" in _data:
+        #     try:
+        #         params["entity_category"] = EntityCategory(_data["entity_category"])
+        #     except ValueError:
+        #         _LOGGER.warning("Invalid entity_category %s for %s", _data["entity_category"], entity)
+        #         del params["entity_category"]  # Remove invalid category
+
+        # Define allowed control types per data type
         allowed_control_types = {
             ModbusDataType.HOLDING_REGISTER: [
                 ControlType.SENSOR,
@@ -215,11 +226,7 @@ class ModbusDeviceInfo:
             _LOGGER.warning("Invalid control_type %s for data_type %s", control_type, data_type)
             return None
 
-        try:
-            params["entity_category"] = EntityCategory(_data.get(CATEGORY))
-        except ValueError:
-            pass
-
+        # Select description class and add control-specific parameters
         desc_cls = None
         if control_type == ControlType.SENSOR:
             desc_cls = ModbusSensorEntityDescription
@@ -259,6 +266,7 @@ class ModbusDeviceInfo:
             return None
 
         if desc_cls:
+            # Filter out None values and create the description
             desc = desc_cls(**{k: v for k, v in params.items() if v is not None})
             if desc.validate():
                 return desc

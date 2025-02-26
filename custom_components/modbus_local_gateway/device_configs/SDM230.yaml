@@ -8,7 +8,7 @@ read_write_word:
     address: 64512
     size: 2
     precision: 0
-    category: diagnostic
+    entity_category: diagnostic
   com_address:
     title: Communicate address
     address: 20
