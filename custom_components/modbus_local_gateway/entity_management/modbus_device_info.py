@@ -197,18 +197,6 @@ class ModbusDeviceInfo:
             "device_class": uom["device_class"],
         })
 
-        # Add state_class for sensors only
-        if control_type == ControlType.SENSOR:
-            params["state_class"] = uom["state_class"]
-
-        # # Handle entity_category directly from _data
-        # if "entity_category" in _data:
-        #     try:
-        #         params["entity_category"] = EntityCategory(_data["entity_category"])
-        #     except ValueError:
-        #         _LOGGER.warning("Invalid entity_category %s for %s", _data["entity_category"], entity)
-        #         del params["entity_category"]  # Remove invalid category
-
         # Define allowed control types per data type
         allowed_control_types = {
             ModbusDataType.HOLDING_REGISTER: [
@@ -225,6 +213,18 @@ class ModbusDeviceInfo:
         if control_type not in allowed_control_types.get(data_type, []):
             _LOGGER.warning("Invalid control_type %s for data_type %s", control_type, data_type)
             return None
+
+        # Add state_class for sensors only
+        if control_type == ControlType.SENSOR:
+            params["state_class"] = uom["state_class"]
+
+        # Handle entity_category directly from params
+        if "entity_category" in params:
+            try:
+                params["entity_category"] = EntityCategory(params["entity_category"])
+            except ValueError:
+                _LOGGER.warning("Invalid entity_category %s for %s", params["entity_category"], entity)
+                del params["entity_category"]  # Remove invalid category
 
         # Select description class and add control-specific parameters
         desc_cls = None

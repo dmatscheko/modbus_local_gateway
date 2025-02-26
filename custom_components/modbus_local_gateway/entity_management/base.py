@@ -28,7 +28,7 @@ from .const import (
 _LOGGER: logging.Logger = logging.getLogger(__name__)
 
 
-@dataclass(kw_only=True, frozen=True)
+@dataclass(kw_only=True, frozen=True) # TODO: Those should be unified with the more complicated names
 class UnusedKeysMixin:
     """Mixin for unused but allowed keys."""
     address: int                                    # register_address
