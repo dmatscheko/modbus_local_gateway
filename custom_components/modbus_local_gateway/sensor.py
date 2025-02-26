@@ -50,6 +50,7 @@ class ModbusSensorEntity(ModbusCoordinatorEntity, RestoreSensor):  # type: ignor
         super().__init__(coordinator, ctx=ctx, device=device)
         self._attr_native_state: State | None
 
+
     async def async_added_to_hass(self) -> None:
         """Restore the state when sensor is added."""
         await super().async_added_to_hass()
@@ -61,6 +62,7 @@ class ModbusSensorEntity(ModbusCoordinatorEntity, RestoreSensor):  # type: ignor
             _LOGGER.debug("%s", last_data)
             self._attr_native_unit_of_measurement = last_data.native_unit_of_measurement
             self._attr_native_value = last_data.native_value
+
 
     @callback
     def _handle_coordinator_update(self) -> None:
@@ -85,33 +87,29 @@ class ModbusSensorEntity(ModbusCoordinatorEntity, RestoreSensor):  # type: ignor
                 self._attr_native_value = value
                 self.async_write_ha_state()
 
-                if (
-                    self._attr_device_info
-                    and "identifiers" in self._attr_device_info
-                    and self.entity_description.key
-                    in [
-                        "hw_version",
-                        "sw_version",
-                    ]
-                ):
-                    attr: dict[str, str] = {self.entity_description.key: str(value)}
-                    _LOGGER.debug(
-                        "Updating device with %s as %s",
-                        self.entity_description.key,
-                        value,
-                    )
-                    device_registry: dr.DeviceRegistry = dr.async_get(self.hass)
-                    device: dr.DeviceEntry | None = device_registry.async_get_device(
-                        self._attr_device_info["identifiers"]
-                    )
-                    if device:
-                        device_registry.async_update_device(
-                            device_id=device.id,
-                            **attr,  # type: ignore
+                if (self._attr_device_info and "identifiers" in self._attr_device_info):
+                    attr_key = None
+                    if self.entity_description.key.endswith("_hw_version"):
+                        attr_key = "hw_version"
+                    elif self.entity_description.key.endswith("_sw_version"):
+                        attr_key = "sw_version"
+
+                    if attr_key:
+                        attr: dict[str, str] = {attr_key: str(value)}
+                        _LOGGER.debug("Updating device with %s as %s", attr_key, value)
+                        device_registry: dr.DeviceRegistry = dr.async_get(self.hass)
+                        device: dr.DeviceEntry | None = device_registry.async_get_device(
+                            self._attr_device_info["identifiers"]
                         )
+                        if device:
+                            device_registry.async_update_device(
+                                device_id=device.id,
+                                **attr,  # type: ignore
+                            )
 
         except Exception as err:  # pylint: disable=broad-exception-caught
             _LOGGER.error("Unable to get data for %s %s", self.name, err)
+
 
     @property
     def native_value(self):  # type: ignore
