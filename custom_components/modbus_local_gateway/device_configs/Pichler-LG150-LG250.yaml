@@ -1,6 +1,6 @@
 device:
   manufacturer: Pichler
-  model: Pichler Lüftungsgerät LG 150 - LG 250
+  model: Lüftungsgerät LG 150 - LG 250
   max_register_read: 100
 
 
@@ -48,7 +48,7 @@ read_write_word: # Holding registers
       1: An
     icon: mdi:dip-switch
     category: diagnostic
-    entity_registry_enabled_default: False # TODO: Implement this
+    entity_registry_enabled_default: False # TODO: Implement this by passing unknown attributes right through
 
   co2_regelung_select:
     title: CO2 Regelung

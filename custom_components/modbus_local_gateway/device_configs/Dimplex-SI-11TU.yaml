@@ -1,6 +1,6 @@
 device:
   manufacturer: Dimplex
-  model: Dimplex Sole/Wasser-Wärmepumpe SI 11TU
+  model: Sole/Wasser-Wärmepumpe SI 11TU
   max_register_read: 10
 
 
