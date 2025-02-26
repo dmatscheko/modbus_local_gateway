@@ -130,8 +130,8 @@ class ConfigFlowHandler(ConfigFlow, domain=DOMAIN):
             return await self.async_create()
 
         devices: dict[str, ModbusDeviceInfo] = await load_devices(self.hass)
-        # devices_data: dict[str, str] = {dev: f"{devices[dev].manufacturer or 'Unknown'} {devices[dev].model or 'Unknown'}" for dev in devices}
-        devices_data = dict(sorted(devices.items(), key=lambda item: f"{item[1].manufacturer or 'Unknown'} {item[1].model or 'Unknown'}"))
+        devices_data: dict[str, str] = {dev: f"{devices[dev].manufacturer or 'Unknown'} {devices[dev].model or 'Unknown'}" for dev in devices}      # but sorted:
+        # devices_data: dict[str, str] = dict(sorted(devices.items(), key=lambda item: f"{item[1].manufacturer or 'Unknown'} {item[1].model or 'Unknown'}"))
 
         return self.async_show_form(
             step_id="device_type",
