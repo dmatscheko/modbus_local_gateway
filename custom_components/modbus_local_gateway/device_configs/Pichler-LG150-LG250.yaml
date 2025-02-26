@@ -9,7 +9,7 @@ read_write_word: # Holding registers
   # Selects
 
   betriebsmodus_sommer_winter_select:
-    title: Betriebsmodus Sommer/Winter
+    name: Betriebsmodus Sommer/Winter
     address: 1
     control: select
     options:
@@ -18,7 +18,7 @@ read_write_word: # Holding registers
     icon: mdi:dip-switch
 
   luftungsstufe_select:
-    title: Lüftungsstufe
+    name: Lüftungsstufe
     address: 2
     control: select
     options:
@@ -30,7 +30,7 @@ read_write_word: # Holding registers
     icon: mdi:stairs
 
   temperaturregelungsart_select:
-    title: Temperaturregelungsart
+    name: Temperaturregelungsart
     address: 7
     control: select
     options:
@@ -40,7 +40,7 @@ read_write_word: # Holding registers
     icon: mdi:thermometer-lines
 
   luftfeuchtigkeit_regelung_select:
-    title: Luftfeuchtigkeit Regelung
+    name: Luftfeuchtigkeit Regelung
     address: 44
     control: select
     options:
@@ -51,7 +51,7 @@ read_write_word: # Holding registers
     entity_registry_enabled_default: False # TODO: Implement this by passing unknown attributes right through
 
   co2_regelung_select:
-    title: CO2 Regelung
+    name: CO2 Regelung
     address: 39
     control: select
     options:
@@ -69,7 +69,7 @@ read_write_word: # Holding registers
   # TODO: Implement Buttons
 
   filter_timer_control:
-    title: Filter Timer Control
+    name: Filter Timer Control
     address: 33
     control: select
     options:
@@ -83,7 +83,7 @@ read_write_word: # Holding registers
   # Numbers
 
   volumenstrom_luftungsstufe_1_number:
-    title: Luftstrom Lüftungsstufe 1
+    name: Luftstrom Lüftungsstufe 1
     address: 9
     control: number
     multiplier: 10
@@ -95,7 +95,7 @@ read_write_word: # Holding registers
     icon: mdi:fan-speed-1
 
   volumenstrom_luftungsstufe_2_number:
-    title: Luftstrom Lüftungsstufe 2
+    name: Luftstrom Lüftungsstufe 2
     address: 10
     control: number
     multiplier: 10
@@ -107,7 +107,7 @@ read_write_word: # Holding registers
     icon: mdi:fan-speed-2
 
   volumenstrom_luftungsstufe_3_number:
-    title: Luftstrom Lüftungsstufe 3
+    name: Luftstrom Lüftungsstufe 3
     address: 11
     control: number
     multiplier: 10
@@ -119,7 +119,7 @@ read_write_word: # Holding registers
     icon: mdi:fan-speed-3
 
   volumenstrom_grundluftung_number:
-    title: Luftstrom Grundlüftung
+    name: Luftstrom Grundlüftung
     address: 12
     control: number
     multiplier: 10
@@ -131,7 +131,7 @@ read_write_word: # Holding registers
     icon: mdi:fan
 
   timer_luftungsstufe_3_number:
-    title: Lüftungsstufe 3 Timer
+    name: Lüftungsstufe 3 Timer
     address: 70
     control: number
     number:
@@ -142,7 +142,7 @@ read_write_word: # Holding registers
     icon: mdi:fan-clock
 
   soll_zulufttemperatur_number:
-    title: Soll Zulufttemperatur
+    name: Soll Zulufttemperatur
     address: 22
     control: number
     multiplier: 0.1
@@ -156,7 +156,7 @@ read_write_word: # Holding registers
     icon: mdi:thermometer
 
   soll_raumlufttemperatur_number:
-    title: Soll Raumlufttemperatur
+    name: Soll Raumlufttemperatur
     address: 23
     control: number
     multiplier: 0.1
@@ -170,7 +170,7 @@ read_write_word: # Holding registers
     icon: mdi:thermometer
 
   soll_ablufttemperatur_number:
-    title: Soll Ablufttemperatur
+    name: Soll Ablufttemperatur
     address: 24
     control: number
     multiplier: 0.1
@@ -184,7 +184,7 @@ read_write_word: # Holding registers
     icon: mdi:thermometer
 
   luftfeuchtigkeit_maximum_number:
-    title: Luftfeuchtigkeit Maximum
+    name: Luftfeuchtigkeit Maximum
     address: 45
     control: number
     number:
@@ -198,7 +198,7 @@ read_write_word: # Holding registers
     entity_registry_enabled_default: False # TODO: Implement this
 
   co2_maximum_number:
-    title: CO2 Maximum
+    name: CO2 Maximum
     address: 40
     control: number
     number:
@@ -214,7 +214,7 @@ read_write_word: # Holding registers
   # Sensors (all commented out because they are represented by the editable entities)
 
   # betriebsmodus_sommer_winter_sensor:
-  #   title: Betriebsmodus Sommer/Winter
+  #   name: Betriebsmodus Sommer/Winter
   #   address: 1
   #   map:
   #     1: Sommer
@@ -224,7 +224,7 @@ read_write_word: # Holding registers
   #   entity_registry_enabled_default: False # TODO: Implement this
 
   # luftungsstufe_sensor:
-  #   title: Lüftungsstufe
+  #   name: Lüftungsstufe
   #   address: 2
   #   map:
   #     0: Standby
@@ -237,7 +237,7 @@ read_write_word: # Holding registers
   #   entity_registry_enabled_default: False # TODO: Implement this
 
   # temperaturregelungsart_sensor:
-  #   title: Temperaturregelungsart
+  #   name: Temperaturregelungsart
   #   address: 7
   #   map:
   #     1: Abluft
@@ -248,7 +248,7 @@ read_write_word: # Holding registers
   #   entity_registry_enabled_default: False # TODO: Implement this
 
   # volumenstrom_luftungsstufe_1_sensor:
-  #   title: Luftstrom Lüftungsstufe 1
+  #   name: Luftstrom Lüftungsstufe 1
   #   address: 9
   #   multiplier: 10
   #   unit_of_measurement: m³/h
@@ -257,7 +257,7 @@ read_write_word: # Holding registers
   #   entity_registry_enabled_default: False # TODO: Implement this
 
   # volumenstrom_luftungsstufe_2_sensor:
-  #   title: Luftstrom Lüftungsstufe 2
+  #   name: Luftstrom Lüftungsstufe 2
   #   address: 10
   #   multiplier: 10
   #   unit_of_measurement: m³/h
@@ -266,7 +266,7 @@ read_write_word: # Holding registers
   #   entity_registry_enabled_default: False # TODO: Implement this
 
   # volumenstrom_luftungsstufe_3_sensor:
-  #   title: Luftstrom Lüftungsstufe 3
+  #   name: Luftstrom Lüftungsstufe 3
   #   address: 11
   #   multiplier: 10
   #   unit_of_measurement: m³/h
@@ -275,7 +275,7 @@ read_write_word: # Holding registers
   #   entity_registry_enabled_default: False # TODO: Implement this
 
   # volumenstrom_grundluftung_sensor:
-  #   title: Luftstrom Grundlüftung
+  #   name: Luftstrom Grundlüftung
   #   address: 12
   #   multiplier: 10
   #   unit_of_measurement: m³/h
@@ -284,7 +284,7 @@ read_write_word: # Holding registers
   #   entity_registry_enabled_default: False # TODO: Implement this
 
   # timer_luftungsstufe_3_sensor:
-  #   title: Lüftungsstufe 3 Timer
+  #   name: Lüftungsstufe 3 Timer
   #   address: 70
   #   unit_of_measurement: minutes
   #   icon: mdi:fan-clock
@@ -292,7 +292,7 @@ read_write_word: # Holding registers
   #   entity_registry_enabled_default: False # TODO: Implement this
 
   # soll_zulufttemperatur_sensor:
-  #   title: Soll Zulufttemperatur
+  #   name: Soll Zulufttemperatur
   #   address: 22
   #   multiplier: 0.1
   #   offset: -100
@@ -305,7 +305,7 @@ read_write_word: # Holding registers
   #   entity_registry_enabled_default: False # TODO: Implement this
 
   # soll_raumlufttemperatur_sensor:
-  #   title: Soll Raumlufttemperatur
+  #   name: Soll Raumlufttemperatur
   #   address: 23
   #   multiplier: 0.1
   #   offset: -100
@@ -318,7 +318,7 @@ read_write_word: # Holding registers
   #   entity_registry_enabled_default: False # TODO: Implement this
 
   # soll_ablufttemperatur_sensor:
-  #   title: Soll Ablufttemperatur
+  #   name: Soll Ablufttemperatur
   #   address: 24
   #   multiplier: 0.1
   #   offset: -100
@@ -331,7 +331,7 @@ read_write_word: # Holding registers
   #   entity_registry_enabled_default: False # TODO: Implement this
 
   # luftfeuchtigkeit_regelung_sensor:
-  #   title: Luftfeuchtigkeit Regelung
+  #   name: Luftfeuchtigkeit Regelung
   #   address: 44
   #   map:
   #     0: Aus
@@ -341,7 +341,7 @@ read_write_word: # Holding registers
   #   entity_registry_enabled_default: False # TODO: Implement this
 
   # co2_regelung_sensor:
-  #   title: CO2 Regelung
+  #   name: CO2 Regelung
   #   address: 39
   #   map:
   #     0: Aus
@@ -351,7 +351,7 @@ read_write_word: # Holding registers
   #   entity_registry_enabled_default: False # TODO: Implement this
 
   # luftfeuchtigkeit_maximum_sensor:
-  #   title: Luftfeuchtigkeit Maximum
+  #   name: Luftfeuchtigkeit Maximum
   #   address: 45
   #   unit_of_measurement: "%"
   #   device_class: humidity
@@ -360,7 +360,7 @@ read_write_word: # Holding registers
   #   entity_registry_enabled_default: False # TODO: Implement this
 
   # co2_maximum_sensor:
-  #   title: CO2 Maximum
+  #   name: CO2 Maximum
   #   address: 40
   #   unit_of_measurement: ppm
   #   device_class: co2
@@ -374,7 +374,7 @@ read_only_word: # Input registers
   # Sensors
 
   temperatur_raum_display:
-    title: Temperatur Raum Display
+    name: Temperatur Raum Display
     address: 29
     size: 1
     multiplier: 0.1
@@ -386,7 +386,7 @@ read_only_word: # Input registers
     icon: mdi:thermometer
 
   temperatur_aussenluft:
-    title: Temperatur Außenluft
+    name: Temperatur Außenluft
     address: 30
     size: 1
     multiplier: 0.1
@@ -398,7 +398,7 @@ read_only_word: # Input registers
     icon: mdi:thermometer
 
   temperatur_fortluft:
-    title: Temperatur Fortluft
+    name: Temperatur Fortluft
     address: 31
     size: 1
     multiplier: 0.1
@@ -410,7 +410,7 @@ read_only_word: # Input registers
     icon: mdi:thermometer
 
   temperatur_abluft:
-    title: Abluft Temperatur
+    name: Abluft Temperatur
     address: 32
     size: 1
     multiplier: 0.1
@@ -422,7 +422,7 @@ read_only_word: # Input registers
     icon: mdi:thermometer
 
   temperatur_zuluft:
-    title: Zuluft Temperatur
+    name: Zuluft Temperatur
     address: 33
     size: 1
     multiplier: 0.1
@@ -434,7 +434,7 @@ read_only_word: # Input registers
     icon: mdi:thermometer
 
   temperatur_nachheizregister_zuluft:
-    title: Temperatur Nachheizregister Zuluft
+    name: Temperatur Nachheizregister Zuluft
     address: 34
     size: 1
     multiplier: 0.1
@@ -448,49 +448,49 @@ read_only_word: # Input registers
     entity_registry_enabled_default: False # TODO: Implement this
 
   zuluftventilator_drehzahl:
-    title: Zuluft Ventilatordrehzahl
+    name: Zuluft Ventilatordrehzahl
     address: 39
     unit_of_measurement: rpm
     state_class: measurement
     icon: mdi:fan
 
   abluftventilator_drehzahl:
-    title: Abluft Ventilatordrehzahl
+    name: Abluft Ventilatordrehzahl
     address: 40
     unit_of_measurement: rpm
     state_class: measurement
     icon: mdi:fan
 
   zuluftventilator:
-    title: Zuluft Ventilatorleistung
+    name: Zuluft Ventilatorleistung
     address: 44
     unit_of_measurement: "%"
     state_class: measurement
     icon: mdi:fan
 
   abluftventilator:
-    title: Abluft Ventilatorleistung
+    name: Abluft Ventilatorleistung
     address: 45
     unit_of_measurement: "%"
     state_class: measurement
     icon: mdi:fan
 
   zuluftvolumenstrom:
-    title: Zuluft Luftstrom
+    name: Zuluft Luftstrom
     address: 46
     unit_of_measurement: m³/h
     state_class: measurement
     icon: mdi:air-filter
 
   abluftvolumenstrom:
-    title: Abluft Luftstrom
+    name: Abluft Luftstrom
     address: 47
     unit_of_measurement: m³/h
     state_class: measurement
     icon: mdi:air-filter
 
   betriebsstatus:
-    title: Betriebsstatus
+    name: Betriebsstatus
     address: 48
     map:
       0: CPU startup
@@ -503,14 +503,14 @@ read_only_word: # Input registers
     icon: mdi:state-machine
 
   filter_reststandzeit:
-    title: Filter Reststandzeit
+    name: Filter Reststandzeit
     address: 50
     unit_of_measurement: hours
     state_class: total
     icon: mdi:timer-sand
 
   aktuelle_luftungsstufe:
-    title: Aktuelle Lüftungsstufe
+    name: Aktuelle Lüftungsstufe
     address: 59
     map:
       0: Standby
@@ -523,35 +523,35 @@ read_only_word: # Input registers
     icon: mdi:stairs
 
   lufter_1_stunden:
-    title: Lüfter 1 Stunden
+    name: Lüfter 1 Stunden
     address: 87
     unit_of_measurement: hours
     state_class: total
     icon: mdi:timer-sand
 
   lufter_2_stunden:
-    title: Lüfter 2 Stunden
+    name: Lüfter 2 Stunden
     address: 81
     unit_of_measurement: hours
     state_class: total
     icon: mdi:timer-sand
 
   lufter_3_stunden:
-    title: Lüfter 3 Stunden
+    name: Lüfter 3 Stunden
     address: 82
     unit_of_measurement: hours
     state_class: total
     icon: mdi:timer-sand
 
   lufter_grund_stunden:
-    title: Lüfter Grund Stunden
+    name: Lüfter Grund Stunden
     address: 83
     unit_of_measurement: hours
     state_class: total
     icon: mdi:timer-sand
 
   heizelement_stunden:
-    title: Heizelement Stunden
+    name: Heizelement Stunden
     address: 85
     unit_of_measurement: hours
     state_class: total
@@ -560,7 +560,7 @@ read_only_word: # Input registers
     entity_registry_enabled_default: False # TODO: Implement this
 
   position_bypassklappe:
-    title: Position Bypassklappe
+    name: Position Bypassklappe
     address: 51
     map:
       1: Wärmerückgewinnung
@@ -570,7 +570,7 @@ read_only_word: # Input registers
     icon: mdi:valve
 
   feuchtesensor_1:
-    title: Feuchtesensor 1
+    name: Feuchtesensor 1
     address: 91
     unit_of_measurement: "%"
     device_class: humidity
@@ -580,7 +580,7 @@ read_only_word: # Input registers
     entity_registry_enabled_default: False # TODO: Implement this
 
   feuchtesensor_2:
-    title: Feuchtesensor 2
+    name: Feuchtesensor 2
     address: 92
     unit_of_measurement: "%"
     device_class: humidity
@@ -590,7 +590,7 @@ read_only_word: # Input registers
     entity_registry_enabled_default: False # TODO: Implement this
 
   co2_sensor_1:
-    title: CO2 Sensor 1
+    name: CO2 Sensor 1
     address: 89
     unit_of_measurement: ppm
     device_class: co2
@@ -600,7 +600,7 @@ read_only_word: # Input registers
     entity_registry_enabled_default: False # TODO: Implement this
 
   co2_sensor_2:
-    title: CO2 Sensor 2
+    name: CO2 Sensor 2
     address: 90
     unit_of_measurement: ppm
     device_class: co2
