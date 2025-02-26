@@ -51,7 +51,7 @@ async def test_int16_bitshift() -> None:
         desc=ModbusSensorEntityDescription(  # pylint: disable=unexpected-keyword-arg
             register_address=1,
             key="test",
-            bit_shift=8,
+            shift_bits=8,
         ),
     )
 
@@ -255,7 +255,7 @@ async def test_enum_bitshift() -> None:
             register_address=1,
             key="test",
             register_map={1: "One", 3: "three", 4: "Four", 5: "Good"},
-            bit_shift=8,
+            shift_bits=8,
         ),
     )
 
@@ -310,7 +310,7 @@ async def test_flags_high() -> None:
             key="test",
             flags={1: "One", 3: "Good", 4: "Bad"},
             bits=8,
-            bit_shift=8,
+            shift_bits=8,
         ),
     )
 

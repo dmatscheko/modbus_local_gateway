@@ -119,7 +119,7 @@ def test_entity_create_all_fields() -> None:
             assert entity.float
             assert not entity.string
             assert entity.bits == 8
-            assert entity.bit_shift == 2
+            assert entity.shift_bits == 2
             assert entity.register_multiplier == 10
             assert entity.register_count == 2
             assert entity.icon == "mdi:icon"

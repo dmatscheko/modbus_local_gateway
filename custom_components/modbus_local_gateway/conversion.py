@@ -107,11 +107,11 @@ class Conversion:
             ),
         )
         if isinstance(num, int):
-            if desc.bit_shift:
-                num = num >> desc.bit_shift
+            if desc.shift_bits:
+                num = num >> desc.shift_bits
             if desc.bits:
                 num = num & int("1" * desc.bits, 2)
-        elif desc.bit_shift or desc.bits:
+        elif desc.shift_bits or desc.bits:
             raise InvalidDataTypeError()
         if desc.register_multiplier:
             num = num * desc.register_multiplier
@@ -129,7 +129,7 @@ class Conversion:
             num = num / desc.register_multiplier
         if desc.bits:
             raise NotSupportedError("Setting of bit fields is not supported")
-        if desc.bit_shift:
+        if desc.shift_bits:
             raise NotSupportedError("Setting of bit fields is not supported")
 
         registers: list[int] = self.client.convert_to_registers(

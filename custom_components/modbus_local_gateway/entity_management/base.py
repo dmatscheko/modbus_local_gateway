@@ -20,12 +20,22 @@ from .const import (
     PRECISION,
     REGISTER_COUNT,
     REGISTER_MULTIPLIER,
-    SHIFT,
+    SHIFT_BITS,
     ControlType,
     ModbusDataType,
 )
 
 _LOGGER: logging.Logger = logging.getLogger(__name__)
+
+
+@dataclass(kw_only=True, frozen=True)
+class UnusedKeysMixin:
+    """Mixin for unused but allowed keys."""
+    address: int                            # register_address
+    size: int | None = 1                    # register_count
+    multiplier: float | None = 1.0          # register_multiplier
+    offset: float | None = None             # register_offset
+    map: dict[int, str] | None = None       # register_map
 
 
 @dataclass(kw_only=True, frozen=True)
@@ -35,22 +45,19 @@ class ModbusRequiredKeysMixin:
 
 
 @dataclass(kw_only=True, frozen=True)
-class ModbusEntityDescription(EntityDescription, ModbusRequiredKeysMixin):
+class ModbusEntityDescription(EntityDescription, ModbusRequiredKeysMixin, UnusedKeysMixin):
     """Describes Modbus sensor entity."""
     data_type: ModbusDataType
     precision: int | None = None
-    currency: bool = False
-    previous_value_drop_threshold: float | None = None
     never_resets: bool = False
     register_count: int | None = 1
     register_multiplier: float | None = 1.0
     register_offset: float | None = None
     register_map: dict[int, str] | None = None
-    icon: str | None = None
     string: bool | None = False
     float: bool | None = False
     flags: dict[int, str] | None = None
-    bit_shift: int | None = None
+    shift_bits: int | None = None
     bits: int | None = None
     control_type: str | None = ControlType.SENSOR
 
@@ -64,7 +71,7 @@ class ModbusEntityDescription(EntityDescription, ModbusRequiredKeysMixin):
             )
             valid = False
         elif (
-            self.bit_shift
+            self.shift_bits
             or self.bits
             or self.precision
             or (self.register_multiplier and int(self.register_multiplier) != 1)
@@ -73,14 +80,14 @@ class ModbusEntityDescription(EntityDescription, ModbusRequiredKeysMixin):
                 "Unable to create entity for %s, %s, %s, %s and %s not valid for %s",
                 self.key,
                 BITS,
-                SHIFT,
+                SHIFT_BITS,
                 PRECISION,
                 REGISTER_MULTIPLIER,
                 IS_STRING,
             )
             valid = False
         elif (
-            self.bit_shift
+            self.shift_bits
             or self.bits
             or (self.register_multiplier and int(self.register_multiplier) != 1)
         ) and self.float:
@@ -88,7 +95,7 @@ class ModbusEntityDescription(EntityDescription, ModbusRequiredKeysMixin):
                 "Unable to create entity for %s, %s, %s and %s not valid for %s",
                 self.key,
                 BITS,
-                SHIFT,
+                SHIFT_BITS,
                 REGISTER_MULTIPLIER,
                 IS_FLOAT,
             )
