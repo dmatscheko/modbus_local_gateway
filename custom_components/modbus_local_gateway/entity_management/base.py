@@ -36,7 +36,10 @@ class UnusedKeysMixin:
     multiplier: float | None = 1.0                  # register_multiplier
     offset: float | None = None                     # register_offset
     map: dict[int, str] | None = None               # register_map
-    control: str | None = ControlType.SENSOR   # control_type
+    control: str | None = ControlType.SENSOR        # control_type
+    number: dict[str, int] | None = None            # min, max
+    options: dict[int, str] | None = None           # select_options
+    switch: dict[str, float] | None = None          # on, off
 
 
 @dataclass(kw_only=True, frozen=True)
