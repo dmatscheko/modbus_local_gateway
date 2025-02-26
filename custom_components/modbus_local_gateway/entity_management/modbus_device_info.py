@@ -172,6 +172,23 @@ class ModbusDeviceInfo:
         }
         control_type = _data.get(CONTROL_TYPE, default_control_type[data_type])
 
+        # Define allowed control types per data type
+        allowed_control_types = {
+            ModbusDataType.HOLDING_REGISTER: [
+                ControlType.SENSOR,
+                ControlType.NUMBER,
+                ControlType.SELECT,
+                ControlType.TEXT,
+                ControlType.SWITCH,
+            ],
+            ModbusDataType.INPUT_REGISTER: [ControlType.SENSOR],
+            ModbusDataType.COIL: [ControlType.BINARY_SENSOR, ControlType.SWITCH],
+            ModbusDataType.DISCRETE_INPUT: [ControlType.BINARY_SENSOR],
+        }
+        if control_type not in allowed_control_types.get(data_type, []):
+            _LOGGER.warning("Invalid control_type %s for data_type %s", control_type, data_type)
+            return None
+
         # Start with all attributes from _data
         params = dict(_data)
 
@@ -196,23 +213,6 @@ class ModbusDeviceInfo:
             "native_unit_of_measurement": uom["native_unit_of_measurement"],
             "device_class": uom["device_class"],
         })
-
-        # Define allowed control types per data type
-        allowed_control_types = {
-            ModbusDataType.HOLDING_REGISTER: [
-                ControlType.SENSOR,
-                ControlType.NUMBER,
-                ControlType.SELECT,
-                ControlType.TEXT,
-                ControlType.SWITCH,
-            ],
-            ModbusDataType.INPUT_REGISTER: [ControlType.SENSOR],
-            ModbusDataType.COIL: [ControlType.SWITCH],
-            ModbusDataType.DISCRETE_INPUT: [ControlType.BINARY_SENSOR],
-        }
-        if control_type not in allowed_control_types.get(data_type, []):
-            _LOGGER.warning("Invalid control_type %s for data_type %s", control_type, data_type)
-            return None
 
         # Add state_class for sensors only
         if control_type == ControlType.SENSOR:
