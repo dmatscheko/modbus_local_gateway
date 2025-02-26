@@ -31,11 +31,12 @@ _LOGGER: logging.Logger = logging.getLogger(__name__)
 @dataclass(kw_only=True, frozen=True)
 class UnusedKeysMixin:
     """Mixin for unused but allowed keys."""
-    address: int                            # register_address
-    size: int | None = 1                    # register_count
-    multiplier: float | None = 1.0          # register_multiplier
-    offset: float | None = None             # register_offset
-    map: dict[int, str] | None = None       # register_map
+    address: int                                    # register_address
+    size: int | None = 1                            # register_count
+    multiplier: float | None = 1.0                  # register_multiplier
+    offset: float | None = None                     # register_offset
+    map: dict[int, str] | None = None               # register_map
+    control: str | None = ControlType.SENSOR   # control_type
 
 
 @dataclass(kw_only=True, frozen=True)
