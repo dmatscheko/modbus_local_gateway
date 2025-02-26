@@ -7,7 +7,7 @@ read_write_word:
 read_only_word:
   Voltage:
     address: 2500
-    title: Voltage
+    name: Voltage
     unit_of_measurement: Volts
     precision: 2
     float: True
@@ -17,7 +17,7 @@ read_only_word:
 
   Current:
     address: 2516
-    title: Current
+    name: Current
     unit_of_measurement: Amps
     precision: 2
     float: True
@@ -27,7 +27,7 @@ read_only_word:
 
   Active Power:
     address: 2530
-    title: Active Power
+    name: Active Power
     unit_of_measurement: Watts
     precision: 2
     float: True
@@ -37,7 +37,7 @@ read_only_word:
 
   Apparent Power:
     address: 2546
-    title: Apparent Power
+    name: Apparent Power
     unit_of_measurement: VoltAmps  # Note: Corrected from "VoltsA" to "VoltAmps"
     precision: 2
     float: True
@@ -47,7 +47,7 @@ read_only_word:
 
   Reactive Power:
     address: 2538
-    title: Reactive Power
+    name: Reactive Power
     unit_of_measurement: VAr
     precision: 2
     float: True
@@ -56,7 +56,7 @@ read_only_word:
 
   Frequency:
     address: 2498
-    title: Frequency
+    name: Frequency
     unit_of_measurement: Hz
     precision: 2
     float: True
@@ -66,7 +66,7 @@ read_only_word:
 
   Power Factor:
     address: 2554
-    title: Power Factor
+    name: Power Factor
     precision: 2
     float: True
     state_class: measurement
@@ -74,7 +74,7 @@ read_only_word:
 
   Counter N1:
     address: 462
-    title: Counter N1
+    name: Counter N1
     unit_of_measurement: Wh
     precision: 3
     float: False
@@ -84,7 +84,7 @@ read_only_word:
 
   Counter N2:
     address: 464
-    title: Counter N2
+    name: Counter N2
     unit_of_measurement: Wh
     precision: 3
     float: False
@@ -94,7 +94,7 @@ read_only_word:
 
   Counter N3:
     address: 466
-    title: Counter N3
+    name: Counter N3
     unit_of_measurement: Wh
     precision: 3
     float: False
@@ -104,7 +104,7 @@ read_only_word:
 
   Counter N4:
     address: 468
-    title: Counter N4
+    name: Counter N4
     unit_of_measurement: Wh
     precision: 3
     float: False
@@ -114,7 +114,7 @@ read_only_word:
 
   Counter C1:
     address: 470
-    title: Counter C1
+    name: Counter C1
     unit_of_measurement: Wh
     precision: 3
     float: False
@@ -124,7 +124,7 @@ read_only_word:
 
   Counter C2:
     address: 472
-    title: Counter C2
+    name: Counter C2
     unit_of_measurement: Wh
     precision: 3
     float: False
@@ -134,7 +134,7 @@ read_only_word:
 
   Counter C3:
     address: 474
-    title: Counter C3
+    name: Counter C3
     unit_of_measurement: Wh
     precision: 3
     float: False
@@ -144,7 +144,7 @@ read_only_word:
 
   Counter C4:
     address: 476
-    title: Counter C4
+    name: Counter C4
     unit_of_measurement: Wh
     precision: 3
     float: False
@@ -154,7 +154,7 @@ read_only_word:
 
   Counter C5:
     address: 478
-    title: Counter C5
+    name: Counter C5
     unit_of_measurement: Wh
     precision: 3
     float: False
@@ -164,7 +164,7 @@ read_only_word:
 
   Counter C6:
     address: 480
-    title: Counter C6
+    name: Counter C6
     unit_of_measurement: Wh
     precision: 3
     float: False
@@ -174,7 +174,7 @@ read_only_word:
 
   Counter C7:
     address: 482
-    title: Counter C7
+    name: Counter C7
     unit_of_measurement: Wh
     precision: 3
     float: False
@@ -184,7 +184,7 @@ read_only_word:
 
   Counter C8:
     address: 484
-    title: Counter C8
+    name: Counter C8
     unit_of_measurement: Wh
     precision: 3
     float: False

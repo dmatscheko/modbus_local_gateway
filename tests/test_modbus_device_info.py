@@ -18,23 +18,23 @@ def test_entity_load() -> None:
 
 read_write_word:
   entity_rw:
-    title: Read-Write Entity
+    name: Read-Write Entity
     address: 1
 
 read_only_word:
   entity_ro:
-    title: Read-Only Entity
+    name: Read-Only Entity
     address: 2
 
 read_write_boolean:
   coil_rw:
-    title: Coil RW
+    name: Coil RW
     address: 3
     control: switch
 
 read_only_boolean:
   discrete_ro:
-    title: Discrete RO
+    name: Discrete RO
     address: 4"""
 
     with patch(
@@ -59,10 +59,10 @@ def test_entity_create_basic() -> None:
         """Mocked init"""
         self._config = {  # pylint: disable=protected-access
             "device": {"manufacturer": "Test", "model": "Test"},
-            "read_write_word": {"test_rw": {"title": "Title RW", "address": 1}},
-            "read_only_word": {"test_ro": {"title": "Title RO", "address": 2}},
-            "read_write_boolean": {"test_coil": {"title": "Title Coil", "address": 3, "control": "switch"}},
-            "read_only_boolean": {"test_discrete": {"title": "Title Discrete", "address": 4}},
+            "read_write_word": {"test_rw": {"name": "Title RW", "address": 1}},
+            "read_only_word": {"test_ro": {"name": "Title RO", "address": 2}},
+            "read_write_boolean": {"test_coil": {"name": "Title Coil", "address": 3, "control": "switch"}},
+            "read_only_boolean": {"test_discrete": {"name": "Title Discrete", "address": 4}},
         }
 
     with patch.object(ModbusDeviceInfo, "__init__", __init__):
@@ -83,7 +83,7 @@ def test_entity_create_all_fields() -> None:
             "device": {"manufacturer": "Test", "model": "Test"},
             "read_write_word": {
                 "test": {
-                    "title": "Title",
+                    "name": "Title",
                     "address": 1,
                     "float": True,
                     "string": False,
@@ -138,7 +138,7 @@ def test_entity_invalid_string_float() -> None:
         """Mocked init"""
         self._config = {  # pylint: disable=protected-access
             "device": {"manufacturer": "Test", "model": "Test"},
-            "read_write_word": {"test": {"title": "Title", "address": 1, "string": True, "float": True}},
+            "read_write_word": {"test": {"name": "Title", "address": 1, "string": True, "float": True}},
             "read_only_word": {},
             "read_write_boolean": {},
             "read_only_boolean": {},
@@ -158,7 +158,7 @@ def test_entity_invalid_address() -> None:
         """Mocked init"""
         self._config = {  # pylint: disable=protected-access
             "device": {"manufacturer": "Test", "model": "Test"},
-            "read_write_word": {"test": {"title": "Test"}},
+            "read_write_word": {"test": {"name": "Test"}},
             "read_only_word": {},
             "read_write_boolean": {},
             "read_only_boolean": {},
@@ -178,7 +178,7 @@ def test_entity_invalid_control_type() -> None:
         """Mocked init"""
         self._config = {  # pylint: disable=protected-access
             "device": {"manufacturer": "Test", "model": "Test"},
-            "read_only_word": {"test": {"title": "Test", "address": 1, "control": "switch"}},
+            "read_only_word": {"test": {"name": "Test", "address": 1, "control": "switch"}},
             "read_write_word": {},
             "read_write_boolean": {},
             "read_only_boolean": {},

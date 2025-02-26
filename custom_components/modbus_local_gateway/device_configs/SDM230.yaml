@@ -4,13 +4,13 @@ device:
 
 read_write_word:
   serial_num:
-    title: Serial Number
+    name: Serial Number
     address: 64512
     size: 2
     precision: 0
     entity_category: diagnostic
   com_address:
-    title: Communicate address
+    name: Communicate address
     address: 20
     size: 2
     control: number
@@ -20,7 +20,7 @@ read_write_word:
       min: 1
       max: 247
   baud_rate:
-    title: Baud Rate
+    name: Baud Rate
     address: 28
     size: 2
     control: select
@@ -34,7 +34,7 @@ read_write_word:
 read_only_word:
   Total system power demand:
     address: 84
-    title: Total system power demand
+    name: Total system power demand
     unit_of_measurement: Watts
     precision: 2
     float: True
@@ -43,7 +43,7 @@ read_only_word:
 
   Maximum total system power demand:
     address: 86
-    title: Maximum total system power demand
+    name: Maximum total system power demand
     unit_of_measurement: Watts
     precision: 2
     float: True
@@ -53,7 +53,7 @@ read_only_word:
 
   Current system import power demand:
     address: 88
-    title: Current system import power demand
+    name: Current system import power demand
     unit_of_measurement: Watts
     precision: 2
     float: True
@@ -62,7 +62,7 @@ read_only_word:
 
   Maximum system import power demand:
     address: 90
-    title: Maximum system import power demand
+    name: Maximum system import power demand
     unit_of_measurement: Watts
     precision: 2
     float: True
@@ -72,7 +72,7 @@ read_only_word:
 
   Current system export power demand:
     address: 92
-    title: Current system export power demand
+    name: Current system export power demand
     unit_of_measurement: Watts
     precision: 2
     float: True
@@ -81,7 +81,7 @@ read_only_word:
 
   Maximum system export power demand:
     address: 94
-    title: Maximum system export power demand
+    name: Maximum system export power demand
     unit_of_measurement: Watts
     precision: 2
     float: True
@@ -91,7 +91,7 @@ read_only_word:
 
   Voltage:
     address: 0
-    title: Voltage
+    name: Voltage
     unit_of_measurement: Volts
     precision: 2
     float: True
@@ -99,7 +99,7 @@ read_only_word:
 
   Current:
     address: 6
-    title: Current
+    name: Current
     unit_of_measurement: Amps
     precision: 2
     float: True
@@ -107,7 +107,7 @@ read_only_word:
 
   Active Power:
     address: 12
-    title: Active Power
+    name: Active Power
     unit_of_measurement: Watts
     precision: 2
     float: True
@@ -115,7 +115,7 @@ read_only_word:
 
   Apparent Power:
     address: 18
-    title: Apparent Power
+    name: Apparent Power
     unit_of_measurement: VoltAmps
     precision: 2
     float: True
@@ -123,7 +123,7 @@ read_only_word:
 
   Reactive Power:
     address: 24
-    title: Reactive Power
+    name: Reactive Power
     unit_of_measurement: VAr
     precision: 2
     float: True
@@ -131,7 +131,7 @@ read_only_word:
 
   Power Factor:
     address: 30
-    title: Power Factor
+    name: Power Factor
     precision: 2
     float: True
     state_class: measurement
@@ -139,7 +139,7 @@ read_only_word:
 
   Phase Angle:
     address: 36
-    title: Phase Angle
+    name: Phase Angle
     unit_of_measurement: Degrees
     precision: 2
     float: True
@@ -148,7 +148,7 @@ read_only_word:
 
   Frequency:
     address: 70
-    title: Frequency
+    name: Frequency
     unit_of_measurement: Hz
     precision: 2
     float: True
@@ -157,7 +157,7 @@ read_only_word:
 
   Import Active Energy:
     address: 72
-    title: Import Active Energy
+    name: Import Active Energy
     unit_of_measurement: kWh
     precision: 2
     float: True
@@ -168,7 +168,7 @@ read_only_word:
 
   Export Active Energy:
     address: 74
-    title: Export Active Energy
+    name: Export Active Energy
     unit_of_measurement: kWh
     precision: 2
     float: True
@@ -179,7 +179,7 @@ read_only_word:
 
   Import Reactive Energy:
     address: 76
-    title: Import Reactive Energy
+    name: Import Reactive Energy
     unit_of_measurement: kVArh
     precision: 2
     float: True
@@ -189,7 +189,7 @@ read_only_word:
 
   Export Reactive Energy:
     address: 78
-    title: Export Reactive Energy
+    name: Export Reactive Energy
     unit_of_measurement: kVArh
     precision: 2
     float: True
@@ -199,7 +199,7 @@ read_only_word:
 
   Current demand:
     address: 258
-    title: Current demand
+    name: Current demand
     unit_of_measurement: Amps
     precision: 2
     float: True
@@ -208,7 +208,7 @@ read_only_word:
 
   Maximum current Demand:
     address: 264
-    title: Maximum current Demand
+    name: Maximum current Demand
     unit_of_measurement: Amps
     precision: 2
     float: True
@@ -218,7 +218,7 @@ read_only_word:
 
   Total Active Energy:
     address: 342
-    title: Total Active Energy
+    name: Total Active Energy
     unit_of_measurement: kWh
     precision: 2
     float: True
@@ -229,7 +229,7 @@ read_only_word:
 
   Total Reactive Energy:
     address: 344
-    title: Total Reactive Energy
+    name: Total Reactive Energy
     unit_of_measurement: kVArh
     precision: 2
     float: True

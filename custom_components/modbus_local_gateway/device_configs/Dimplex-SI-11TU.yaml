@@ -7,7 +7,7 @@ device:
 read_write_word:
 
   operating_mode:
-    title: Betriebsmodus
+    name: Betriebsmodus
     address: 5015
     control: select
     options:
@@ -22,7 +22,7 @@ read_write_word:
   # 1. Heizkreis
 
   heating_parallel_shift:
-    title: Heizung Parallelverschiebung
+    name: Heizung Parallelverschiebung
     address: 5036
     control: select
     options:
@@ -68,7 +68,7 @@ read_write_word:
     icon: mdi:home-thermometer-outline
 
   heating_room_temperature:
-    title: Heizung Raumtemperatur
+    name: Heizung Raumtemperatur
     address: 46
     precision: 0
     control: number
@@ -79,7 +79,7 @@ read_write_word:
     icon: mdi:home-thermometer-outline
 
   heating_fixed_target:
-    title: Heizung Festwertsolltemperatur
+    name: Heizung Festwertsolltemperatur
     address: 5037
     precision: 0
     control: number
@@ -90,7 +90,7 @@ read_write_word:
     icon: mdi:home-thermometer
 
   heating_curve_end_point:
-    title: Heizung Heizkurvenendpunkt
+    name: Heizung Heizkurvenendpunkt
     address: 5038
     precision: 0
     control: number
@@ -101,7 +101,7 @@ read_write_word:
     icon: mdi:home-thermometer-outline
 
   heating_hysteresis:
-    title: Heizung Hysterese
+    name: Heizung Hysterese
     address: 47
     precision: 1
     multiplier: 0.1
@@ -113,7 +113,7 @@ read_write_word:
     icon: mdi:home-thermometer-outline
 
   external_block_software:
-    title: Softwaresperre Extern
+    name: Softwaresperre Extern
     address: 5130
     control: select
     options:
@@ -125,7 +125,7 @@ read_write_word:
   # Warmwasser
 
   hot_water_hysteresis:
-    title: Warmwasser Hysterese
+    name: Warmwasser Hysterese
     address: 5045
     precision: 0
     control: number
@@ -136,7 +136,7 @@ read_write_word:
     icon: mdi:water-thermometer-outline
 
   hot_water_fixed_target:
-    title: Warmwasser Festwertsolltemperatur
+    name: Warmwasser Festwertsolltemperatur
     address: 5047
     precision: 0
     control: number
@@ -147,7 +147,7 @@ read_write_word:
     icon: mdi:water-thermometer
 
   hot_water_min_fixed_target:
-    title: Warmwasser Solltemperatur Minimal
+    name: Warmwasser Solltemperatur Minimal
     address: 5145
     precision: 0
     control: number
@@ -158,7 +158,7 @@ read_write_word:
     icon: mdi:water-thermometer-outline
 
   hot_water_max_fixed_target:
-    title: Warmwasser Solltemperatur Maximal
+    name: Warmwasser Solltemperatur Maximal
     address: 5048
     precision: 0
     control: number
@@ -173,7 +173,7 @@ read_only_word:
   # Betriebsdaten / Operating Data
 
   outside_temp:
-    title: Außentemperatur (R1)
+    name: Außentemperatur (R1)
     address: 1
     precision: 1
     multiplier: 0.1
@@ -181,7 +181,7 @@ read_only_word:
     icon: mdi:thermometer
 
   heating_return_temp:
-    title: Heizung Rücklauftemperatur (R2)
+    name: Heizung Rücklauftemperatur (R2)
     address: 2
     precision: 1
     multiplier: 0.1
@@ -189,7 +189,7 @@ read_only_word:
     icon: mdi:thermometer
 
   heating_return_target:
-    title: Heizung Rücklaufsolltemperatur
+    name: Heizung Rücklaufsolltemperatur
     address: 53
     precision: 1
     multiplier: 0.1
@@ -197,7 +197,7 @@ read_only_word:
     icon: mdi:thermometer
 
   hot_water_temp:
-    title: Warmwasser Temperatur (R3)
+    name: Warmwasser Temperatur (R3)
     address: 3
     precision: 1
     multiplier: 0.1
@@ -205,7 +205,7 @@ read_only_word:
     icon: mdi:thermometer
 
   hot_water_target:
-    title: Warmwasser Solltemperatur
+    name: Warmwasser Solltemperatur
     address: 58
     precision: 1
     multiplier: 0.1
@@ -213,7 +213,7 @@ read_only_word:
     icon: mdi:thermometer
 
   flow_temp:
-    title: Vorlauftemperatur (R9)
+    name: Vorlauftemperatur (R9)
     address: 5
     precision: 1
     multiplier: 0.1
@@ -221,7 +221,7 @@ read_only_word:
     icon: mdi:thermometer
 
   source_input_temp:
-    title: Wärmequelleneintrittstemperatur (R24)
+    name: Wärmequelleneintrittstemperatur (R24)
     address: 6
     precision: 1
     multiplier: 0.1
@@ -229,7 +229,7 @@ read_only_word:
     icon: mdi:thermometer
 
   source_output_temp:
-    title: Wärmequellenaustrittstemperatur (R6)
+    name: Wärmequellenaustrittstemperatur (R6)
     address: 7
     precision: 1
     multiplier: 0.1
@@ -239,7 +239,7 @@ read_only_word:
   # Operating Hours
 
   compressor1_hours:
-    title: Verdichter 1 Laufzeit
+    name: Verdichter 1 Laufzeit
     address: 72
     precision: 0
     never_resets: True
@@ -248,7 +248,7 @@ read_only_word:
     icon: mdi:history
 
   primary_pump_hours:
-    title: Primärpumpe / Ventilator (M11) Laufzeit
+    name: Primärpumpe / Ventilator (M11) Laufzeit
     address: 74
     precision: 0
     never_resets: True
@@ -257,7 +257,7 @@ read_only_word:
     icon: mdi:history
 
   heating_pump_hours:
-    title: Heizungspumpe (M13) Laufzeit
+    name: Heizungspumpe (M13) Laufzeit
     address: 76
     precision: 0
     never_resets: True
@@ -266,7 +266,7 @@ read_only_word:
     icon: mdi:history
 
   hot_water_pump_hours:
-    title: Warmwasserpumpe (M18) Laufzeit
+    name: Warmwasserpumpe (M18) Laufzeit
     address: 77
     precision: 0
     never_resets: True
@@ -275,7 +275,7 @@ read_only_word:
     icon: mdi:history
 
   additional_pump_hours:
-    title: Zusatzumwälzpumpe (M16) Laufzeit
+    name: Zusatzumwälzpumpe (M16) Laufzeit
     address: 71
     precision: 0
     never_resets: True
@@ -286,7 +286,7 @@ read_only_word:
   # Energy Measurements
 
   heating_energy:
-    title: Wärmemenge Heizung
+    name: Wärmemenge Heizung
     address: 5096
     precision: 0
     size: 3
@@ -297,7 +297,7 @@ read_only_word:
     icon: mdi:meter-electric
 
   hot_water_energy:
-    title: Wärmemenge Warmwasser
+    name: Wärmemenge Warmwasser
     address: 5099
     precision: 0
     size: 3
@@ -310,7 +310,7 @@ read_only_word:
   # Status Messages
 
   operation_status:
-    title: Statusmeldung
+    name: Statusmeldung
     address: 103
     map:
       0: "Aus"
@@ -326,7 +326,7 @@ read_only_word:
     icon: mdi:message-processing
 
   blocking_status:
-    title: Sperrmeldung
+    name: Sperrmeldung
     address: 104
     map:
       0: "keine Meldung"
@@ -359,7 +359,7 @@ read_only_word:
     icon: mdi:message-alert
 
   fault_status:
-    title: Störmeldung
+    name: Störmeldung
     address: 105
     map:
       0: "kein Fehler"
@@ -389,7 +389,7 @@ read_only_word:
     icon: mdi:message-alert
 
   sensor_status:
-    title: Sensorfehler
+    name: Sensorfehler
     address: 106
     map:
       0: "keine Meldung"
@@ -429,7 +429,7 @@ read_only_boolean:
   ## Eingänge
 
   hot_water_thermostat:
-    title: Warmwasserthermostat
+    name: Warmwasserthermostat
     address: 3
     bits: 1
     map:
@@ -438,7 +438,7 @@ read_only_boolean:
     icon: mdi:thermostat
 
   utility_block:
-    title: EVU-Sperre
+    name: EVU-Sperre
     address: 5
     bits: 1
     map:
@@ -447,7 +447,7 @@ read_only_boolean:
     icon: mdi:eye-lock
 
   external_block:
-    title: Sperre Extern
+    name: Sperre Extern
     address: 6
     bits: 1
     map:
@@ -458,96 +458,96 @@ read_only_boolean:
   ## Ausgänge
 
   compressor1:
-    title: Verdichter 1 Modus
+    name: Verdichter 1 Modus
     address: 41
     bits: 1
     device_class: running
 
   primary_pump:
-    title: Primärpumpe (M11) / Ventilator (M2) Modus
+    name: Primärpumpe (M11) / Ventilator (M2) Modus
     address: 43
     bits: 1
     device_class: running
 
   heating_pump:
-    title: Heizungspumpe (M13) Modus
+    name: Heizungspumpe (M13) Modus
     address: 45
     bits: 1
     device_class: running
 
   hot_water_pump:
-    title: Warmwasserpumpe (M18) Modus
+    name: Warmwasserpumpe (M18) Modus
     address: 46
     bits: 1
     device_class: running
 
   mixer_open:
-    title: Mischer (M21) Modus
+    name: Mischer (M21) Modus
     address: 47
     bits: 1
     device_class: opening
 
   additional_pump:
-    title: Zusatzumwälzpumpe (M16) Modus
+    name: Zusatzumwälzpumpe (M16) Modus
     address: 49
     bits: 1
     device_class: running
 
   heating_pump_m15:
-    title: Heizungspumpe (M15) Modus
+    name: Heizungspumpe (M15) Modus
     address: 51
     bits: 1
     device_class: running
 
   mixer_m22_open:
-    title: Mischer (M22) Modus
+    name: Mischer (M22) Modus
     address: 52
     bits: 1
     device_class: opening
 
   pool_pump:
-    title: Schwimmbadpumpe (M19) Modus
+    name: Schwimmbadpumpe (M19) Modus
     address: 56
     bits: 1
     device_class: running
 
   error_indicator:
-    title: Sammelstörmeldung (H5) Modus
+    name: Sammelstörmeldung (H5) Modus
     address: 57
     bits: 1
     device_class: problem
 
   heating_pump_m14:
-    title: Heizungspumpe (M14) Modus
+    name: Heizungspumpe (M14) Modus
     address: 59
     bits: 1
     device_class: running
 
   cooling_pump:
-    title: Kühlpumpe (M17) Modus
+    name: Kühlpumpe (M17) Modus
     address: 60
     bits: 1
     device_class: running
 
   heating_pump_m20:
-    title: Heizungspumpe (M20) Modus
+    name: Heizungspumpe (M20) Modus
     address: 61
     bits: 1
     device_class: running
 
   room_thermostat_mode:
-    title: Umschaltung Raumthermostate Heizen/Kühlen (N9) Modus
+    name: Umschaltung Raumthermostate Heizen/Kühlen (N9) Modus
     address: 66
     bits: 1
 
   cooling_primary_pump:
-    title: Primärpumpe Kühlen (M12) Modus
+    name: Primärpumpe Kühlen (M12) Modus
     address: 68
     bits: 1
     device_class: running
 
   solar_pump:
-    title: Solarpumpe (M23) Modus
+    name: Solarpumpe (M23) Modus
     address: 71
     bits: 1
     device_class: running
