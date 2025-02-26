@@ -28,14 +28,6 @@ def get_gateway_key(entry: ConfigEntry, with_slave: bool = True) -> str:
     return f"{entry.data[CONF_HOST]}:{entry.data[CONF_PORT]}"
 
 
-def get_prefix(config: dict[str, Any]) -> str:
-    """Gets the sensor entity id prefix"""
-    prefix: str = config.get(CONF_PREFIX, "")
-    if prefix != "":
-        return f"{prefix}-"
-    return prefix
-
-
 async def async_setup_entities(
     hass: HomeAssistant,
     config_entry: ConfigEntry,
@@ -59,7 +51,7 @@ async def async_setup_entities(
 
     device = DeviceInfo(
         identifiers=identifiers,
-        name=f"{get_prefix(config)}{device_info.model}",
+        name=" ".join([part for part in [config.get(CONF_PREFIX), device_info.manufacturer, device_info.model] if part]),         # name=f"{get_prefix(config)} {device_info.manufacturer} {device_info.model}",
         manufacturer=device_info.manufacturer,
         model=device_info.model,
         via_device=list(coordinator.gateway_device.identifiers)[0],
