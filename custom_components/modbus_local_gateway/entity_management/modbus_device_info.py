@@ -209,14 +209,14 @@ class ModbusDeviceInfo:
             "never_resets": _data.get(NEVER_RESETS, False),
             "data_type": data_type,
             "control_type": control_type,
-            # Only include relevant uom keys based on control_type
             "native_unit_of_measurement": uom["native_unit_of_measurement"],
             "device_class": uom["device_class"],
+            "state_class": uom["state_class"],
         })
 
-        # Add state_class for sensors only
-        if control_type == ControlType.SENSOR:
-            params["state_class"] = uom["state_class"]
+        # # Add state_class for sensors only
+        # if control_type == ControlType.SENSOR:
+        #     params["state_class"] = uom["state_class"]
 
         # Handle entity_category directly from params
         if "entity_category" in params:

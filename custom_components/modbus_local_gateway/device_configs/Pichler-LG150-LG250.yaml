@@ -346,7 +346,7 @@ read_only_word: # Input registers
   filter_reststandzeit:
     name: Filter Reststandzeit
     address: 50
-    unit_of_measurement: hours
+    unit_of_measurement: h
     state_class: total
     icon: mdi:timer-sand
 
@@ -366,36 +366,36 @@ read_only_word: # Input registers
   lufter_1_stunden:
     name: Lüfter 1 Stunden
     address: 87
-    unit_of_measurement: hours
-    state_class: total
+    unit_of_measurement: h
+    state_class: total_increasing
     icon: mdi:timer-sand
 
   lufter_2_stunden:
     name: Lüfter 2 Stunden
     address: 81
-    unit_of_measurement: hours
-    state_class: total
+    unit_of_measurement: h
+    state_class: total_increasing
     icon: mdi:timer-sand
 
   lufter_3_stunden:
     name: Lüfter 3 Stunden
     address: 82
-    unit_of_measurement: hours
-    state_class: total
+    unit_of_measurement: h
+    state_class: total_increasing
     icon: mdi:timer-sand
 
   lufter_grund_stunden:
     name: Lüfter Grund Stunden
     address: 83
-    unit_of_measurement: hours
-    state_class: total
+    unit_of_measurement: h
+    state_class: total_increasing
     icon: mdi:timer-sand
 
   heizelement_stunden:
     name: Heizelement Stunden
     address: 85
-    unit_of_measurement: hours
-    state_class: total
+    unit_of_measurement: h
+    state_class: total_increasing
     icon: mdi:timer-sand
     entity_registry_enabled_default: False
 
