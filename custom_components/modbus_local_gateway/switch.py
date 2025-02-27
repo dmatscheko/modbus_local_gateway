@@ -46,7 +46,7 @@ class ModbusSwitchEntity(ModbusCoordinatorEntity, SwitchEntity):
     ) -> None:
         """Initialize a PVOutput sensor."""
         super().__init__(coordinator, ctx=ctx, device=device)
-        self._attr_entity_id = f"{ControlType.SWITCH}.{slugify(self._attr_device_info.manufacturer + '_' + self.entity_description.name)}"
+        # self._attr_entity_id = f"{ControlType.SWITCH}.{slugify(self._attr_device_info.manufacturer + '_' + self.entity_description.name)}"
 
     @callback
     def _handle_coordinator_update(self) -> None:

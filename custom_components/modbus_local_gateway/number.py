@@ -14,10 +14,7 @@ from homeassistant.util import slugify
 
 from .coordinator import ModbusContext, ModbusCoordinator, ModbusCoordinatorEntity
 from .helpers import async_setup_entities
-from .entity_management.base import (
-    ModbusNumberEntityDescription,
-    ModbusSensorEntityDescription,
-)
+from .entity_management.base import ModbusNumberEntityDescription
 from .entity_management.const import ControlType
 
 _LOGGER: logging.Logger = logging.getLogger(__name__)
@@ -55,7 +52,7 @@ class ModbusNumberEntity(ModbusCoordinatorEntity, NumberEntity):  # type: ignore
         else:
             raise TypeError()
         self._attr_mode = NumberMode.BOX
-        self._attr_entity_id = f"{ControlType.NUMBER}.{slugify(self._attr_device_info.manufacturer + '_' + self.entity_description.name)}"
+        # self._attr_entity_id = f"{ControlType.NUMBER}.{slugify(self._attr_device_info.manufacturer + '_' + self.entity_description.name)}"
 
     @callback
     def _handle_coordinator_update(self) -> None:

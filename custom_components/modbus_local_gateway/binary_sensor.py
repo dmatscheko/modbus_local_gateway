@@ -46,7 +46,7 @@ class ModbusBinarySensorEntity(ModbusCoordinatorEntity, BinarySensorEntity):
         super().__init__(coordinator, ctx=ctx, device=device)
         if not isinstance(ctx.desc, ModbusBinarySensorEntityDescription):
             raise TypeError("Invalid description type")
-        self._attr_entity_id = f"{ControlType.BINARY_SENSOR}.{slugify(self._attr_device_info.manufacturer + '_' + self.entity_description.name)}"
+        # self._attr_entity_id = f"{ControlType.BINARY_SENSOR}.{slugify(self._attr_device_info.manufacturer + '_' + self.entity_description.name)}"
 
     @callback
     def _handle_coordinator_update(self) -> None:

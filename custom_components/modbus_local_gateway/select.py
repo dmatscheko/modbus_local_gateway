@@ -55,7 +55,7 @@ class ModbusSelectEntity(ModbusCoordinatorEntity, SelectEntity):  # type: ignore
         ):
             self._attr_options: list[str] = list(ctx.desc.select_options.values())
         self._attr_current_option = None
-        self._attr_entity_id = f"{ControlType.SELECT}.{slugify(self._attr_device_info.manufacturer + '_' + self.entity_description.name)}"
+        # self._attr_entity_id = f"{ControlType.SELECT}.{slugify(self._attr_device_info.manufacturer + '_' + self.entity_description.name)}"
 
     @callback
     def _handle_coordinator_update(self) -> None:
