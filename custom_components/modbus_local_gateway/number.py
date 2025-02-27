@@ -82,12 +82,12 @@ class ModbusNumberEntity(ModbusCoordinatorEntity, NumberEntity):  # type: ignore
         if isinstance(self.coordinator, ModbusCoordinator):
             await self.coordinator.client.write_data(self.coordinator_context, value)
 
-    @property
-    def state(self) -> int | float:
-        """Return the state of the entity, formatted based on register_multiplier."""
-        if self._attr_native_value is None:
-            return "unknown"
-        multiplier = self.coordinator_context.desc.register_multiplier
-        if multiplier is None or multiplier % 1 == 0:
-            return int(round(self._attr_native_value))
-        return self._attr_native_value
+    # @property
+    # def state(self) -> int | float:
+    #     """Return the state of the entity, formatted based on register_multiplier."""
+    #     if self._attr_native_value is None:
+    #         return "unknown"
+    #     multiplier = self.coordinator_context.desc.register_multiplier
+    #     if multiplier is None or multiplier % 1 == 0:
+    #         return int(round(self._attr_native_value))
+    #     return self._attr_native_value
