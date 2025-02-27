@@ -51,9 +51,11 @@ class ModbusSensorEntity(ModbusCoordinatorEntity, RestoreSensor):  # type: ignor
         super().__init__(coordinator, ctx=ctx, device=device)
         self._attr_native_state: State | None
         # Set suggested_display_precision based on register_multiplier
-        multiplier = self.coordinator_context.desc.register_multiplier
-        if multiplier is None or multiplier % 1 == 0:
-            self._attr_suggested_display_precision = 0
+        is_numeric = not ctx.desc.register_map and not ctx.desc.string
+        if is_numeric:
+            multiplier = self.coordinator_context.desc.register_multiplier
+            if multiplier is None or multiplier % 1 == 0:
+                self._attr_suggested_display_precision = 0
 
 
     async def async_added_to_hass(self) -> None:
