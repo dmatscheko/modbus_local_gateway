@@ -42,7 +42,7 @@ class ModbusBinarySensorEntity(ModbusCoordinatorEntity, BinarySensorEntity):
         device: DeviceInfo,
     ) -> None:
         """Initialize a Modbus binary sensor."""
-        super().__init__(coordinator, ctx=ctx, device=device)
+        super().__init__(coordinator, ctx=ctx, device=device, domain=ControlType.BINARY_SENSOR)
         if not isinstance(ctx.desc, ModbusBinarySensorEntityDescription):
             raise TypeError("Invalid description type")
 

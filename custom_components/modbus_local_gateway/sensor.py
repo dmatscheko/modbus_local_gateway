@@ -47,7 +47,7 @@ class ModbusSensorEntity(ModbusCoordinatorEntity, RestoreSensor):  # type: ignor
         device: DeviceInfo,
     ) -> None:
         """Initialize a PVOutput sensor."""
-        super().__init__(coordinator, ctx=ctx, device=device)
+        super().__init__(coordinator, ctx=ctx, device=device, domain=ControlType.SENSOR)
         self._attr_native_state: State | None
 
 

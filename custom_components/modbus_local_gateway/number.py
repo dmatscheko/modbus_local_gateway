@@ -47,7 +47,7 @@ class ModbusNumberEntity(ModbusCoordinatorEntity, NumberEntity):  # type: ignore
         device: DeviceInfo,
     ) -> None:
         """Initialize a PVOutput number."""
-        super().__init__(coordinator, ctx=ctx, device=device)
+        super().__init__(coordinator, ctx=ctx, device=device, domain=ControlType.NUMBER)
         if isinstance(ctx.desc, ModbusNumberEntityDescription):
             self._attr_native_max_value = ctx.desc.max
             self._attr_native_min_value = ctx.desc.min

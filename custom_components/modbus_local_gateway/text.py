@@ -8,9 +8,10 @@ from typing import cast
 from homeassistant.components.text import TextEntity
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant, callback
+from homeassistant.helpers.device_registry import DeviceInfo
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
-from .coordinator import ModbusCoordinator, ModbusCoordinatorEntity
+from .coordinator import ModbusContext, ModbusCoordinator, ModbusCoordinatorEntity
 from .helpers import async_setup_entities
 from .entity_management.base import ModbusSensorEntityDescription
 from .entity_management.const import ControlType
@@ -35,6 +36,15 @@ async def async_setup_entry(
 
 class ModbusTextEntity(ModbusCoordinatorEntity, TextEntity):  # type: ignore
     """Text entity for Modbus gateway"""
+
+    def __init__(
+        self,
+        coordinator: ModbusCoordinator,
+        ctx: ModbusContext,
+        device: DeviceInfo,
+    ) -> None:
+        """Initialize a PVOutput sensor."""
+        super().__init__(coordinator, ctx=ctx, device=device, domain=ControlType.SWITCH)
 
     @callback
     def _handle_coordinator_update(self) -> None:

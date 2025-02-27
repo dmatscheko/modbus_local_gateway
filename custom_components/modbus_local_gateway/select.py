@@ -47,7 +47,7 @@ class ModbusSelectEntity(ModbusCoordinatorEntity, SelectEntity):  # type: ignore
         device: DeviceInfo,
     ) -> None:
         """Initialize a PVOutput Select."""
-        super().__init__(coordinator, ctx=ctx, device=device)
+        super().__init__(coordinator, ctx=ctx, device=device, domain=ControlType.SELECT)
         if (
             isinstance(ctx.desc, ModbusSelectEntityDescription)
             and ctx.desc.select_options

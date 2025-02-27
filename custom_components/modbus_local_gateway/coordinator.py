@@ -33,6 +33,7 @@ class ModbusCoordinatorEntity(CoordinatorEntity):
         coordinator: ModbusCoordinator,
         ctx: ModbusContext,
         device: DeviceInfo,
+        domain: str,
     ) -> None:
         """Initialize an entity."""
         super().__init__(coordinator, context=ctx)
@@ -42,7 +43,7 @@ class ModbusCoordinatorEntity(CoordinatorEntity):
             raise TypeError()
         self._attr_unique_id: str | None = f"{ctx.slave_id}-{ctx.desc.key}"
         self._attr_device_info: DeviceInfo | None = device
-        self._attr_entity_id = f"{self.DOMAIN}.{slugify(self._attr_device_info.manufacturer + '_' + self.entity_description.name)}"
+        self._attr_entity_id = f"{domain}.{slugify(self._attr_device_info.manufacturer + '_' + self.entity_description.name)}"
 
 
 class ModbusCoordinator(TimestampDataUpdateCoordinator):
