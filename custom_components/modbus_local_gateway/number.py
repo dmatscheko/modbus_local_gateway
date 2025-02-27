@@ -89,5 +89,5 @@ class ModbusNumberEntity(ModbusCoordinatorEntity, NumberEntity):  # type: ignore
             return "unknown"
         multiplier = self.coordinator_context.desc.register_multiplier
         if multiplier is None or multiplier % 1 == 0:
-            return str(int(round(self._attr_native_value)))
-        return str(self._attr_native_value)
+            return int(round(self._attr_native_value))
+        return self._attr_native_value
