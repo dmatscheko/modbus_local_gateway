@@ -192,8 +192,6 @@ class ModbusDeviceInfo:
         # Start with all attributes from _data
         params = dict(_data)
 
-        manufacturer_slug = slugify(self.manufacturer)
-
         # Override or add required and computed fields
         params.update({
             "key": entity,
