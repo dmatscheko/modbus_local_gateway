@@ -210,6 +210,181 @@ read_write_word: # Holding registers
     entity_category: config
     entity_registry_enabled_default: False
 
+  # # Holding register sensors (duplicates of input elements)
+
+  # betriebsmodus_sommer_winter_sensor:
+  #   title: Betriebsmodus Sommer/Winter
+  #   address: 1
+  #   control: sensor
+  #   map:
+  #     1: Sommer
+  #     2: Winter
+  #   icon: mdi:dip-switch
+  #   category: diagnostic
+  #   entity_registry_enabled_default: False
+
+  # luftungsstufe_sensor:
+  #   title: Lüftungsstufe
+  #   address: 2
+  #   control: sensor
+  #   map:
+  #     0: Standby
+  #     1: Stufe 1
+  #     2: Stufe 2
+  #     3: Stufe 3
+  #     4: Grundlüftung
+  #   icon: mdi:fan
+  #   category: diagnostic
+  #   entity_registry_enabled_default: False
+
+  # temperaturregelungsart_sensor:
+  #   title: Temperaturregelungsart
+  #   address: 7
+  #   control: sensor
+  #   map:
+  #     1: Abluft
+  #     2: Zuluft
+  #     3: Raum
+  #   icon: mdi:thermometer-lines
+  #   category: diagnostic
+  #   entity_registry_enabled_default: False
+
+  # volumenstrom_luftungsstufe_1_sensor:
+  #   title: Luftstrom Lüftungsstufe 1
+  #   address: 9
+  #   control: sensor
+  #   multiplier: 10
+  #   unit_of_measurement: m³/h
+  #   icon: mdi:fan-speed-1
+  #   category: diagnostic
+  #   entity_registry_enabled_default: False
+
+  # volumenstrom_luftungsstufe_2_sensor:
+  #   title: Luftstrom Lüftungsstufe 2
+  #   address: 10
+  #   control: sensor
+  #   multiplier: 10
+  #   unit_of_measurement: m³/h
+  #   icon: mdi:fan-speed-2
+  #   category: diagnostic
+  #   entity_registry_enabled_default: False
+
+  # volumenstrom_luftungsstufe_3_sensor:
+  #   title: Luftstrom Lüftungsstufe 3
+  #   address: 11
+  #   control: sensor
+  #   multiplier: 10
+  #   unit_of_measurement: m³/h
+  #   icon: mdi:fan-speed-3
+  #   category: diagnostic
+  #   entity_registry_enabled_default: False
+
+  # volumenstrom_grundluftung_sensor:
+  #   title: Luftstrom Grundlüftung
+  #   address: 12
+  #   control: sensor
+  #   multiplier: 10
+  #   unit_of_measurement: m³/h
+  #   icon: mdi:fan
+  #   category: diagnostic
+  #   entity_registry_enabled_default: False
+
+  # timer_luftungsstufe_3_sensor:
+  #   title: Lüftungsstufe 3 Timer
+  #   address: 70
+  #   control: sensor
+  #   multiplier: 1
+  #   unit_of_measurement: minutes
+  #   icon: mdi:fan-clock
+  #   category: diagnostic
+  #   entity_registry_enabled_default: False
+
+  # soll_zulufttemperatur_sensor:
+  #   title: Soll Zulufttemperatur
+  #   address: 22
+  #   control: sensor
+  #   multiplier: 0.1
+  #   offset: -100
+  #   precision: 1
+  #   unit_of_measurement: Celsius
+  #   device_class: temperature
+  #   state_class: measurement
+  #   icon: mdi:thermometer
+  #   category: diagnostic
+  #   entity_registry_enabled_default: False
+
+  # soll_raumlufttemperatur_sensor:
+  #   title: Soll Raumlufttemperatur
+  #   address: 23
+  #   control: sensor
+  #   multiplier: 0.1
+  #   offset: -100
+  #   precision: 1
+  #   unit_of_measurement: Celsius
+  #   device_class: temperature
+  #   state_class: measurement
+  #   icon: mdi:thermometer
+  #   category: diagnostic
+  #   entity_registry_enabled_default: False
+
+  # soll_ablufttemperatur_sensor:
+  #   title: Soll Ablufttemperatur
+  #   address: 24
+  #   control: sensor
+  #   multiplier: 0.1
+  #   offset: -100
+  #   precision: 1
+  #   unit_of_measurement: Celsius
+  #   device_class: temperature
+  #   state_class: measurement
+  #   icon: mdi:thermometer
+  #   category: diagnostic
+  #   entity_registry_enabled_default: False
+
+  # luftfeuchtigkeit_regelung_sensor:
+  #   title: Luftfeuchtigkeit Regelung
+  #   address: 44
+  #   control: sensor
+  #   map:
+  #     0: Aus
+  #     1: An
+  #   icon: mdi:dip-switch
+  #   category: diagnostic
+  #   entity_registry_enabled_default: False
+
+  # co2_regelung_sensor:
+  #   title: CO2 Regelung
+  #   address: 39
+  #   control: sensor
+  #   map:
+  #     0: Aus
+  #     1: An
+  #   icon: mdi:dip-switch
+  #   category: diagnostic
+  #   entity_registry_enabled_default: False
+
+  # luftfeuchtigkeit_maximum_sensor:
+  #   title: Luftfeuchtigkeit Maximum
+  #   address: 45
+  #   control: sensor
+  #   multiplier: 1
+  #   unit_of_measurement: "%"
+  #   device_class: humidity
+  #   icon: mdi:thermometer
+  #   category: diagnostic
+  #   entity_registry_enabled_default: False
+
+  # co2_maximum_sensor:
+  #   title: CO2 Maximum
+  #   address: 40
+  #   control: sensor
+  #   multiplier: 1
+  #   unit_of_measurement: ppm
+  #   device_class: co2
+  #   icon: mdi:thermometer
+  #   category: diagnostic
+  #   entity_registry_enabled_default: False
+
 
 read_only_word: # Input registers
 
