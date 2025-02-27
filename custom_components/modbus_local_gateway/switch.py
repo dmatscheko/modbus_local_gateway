@@ -10,6 +10,7 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers.device_registry import DeviceInfo
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
+from homeassistant.util import slugify
 
 from .coordinator import ModbusContext, ModbusCoordinator, ModbusCoordinatorEntity
 from .helpers import async_setup_entities
@@ -44,7 +45,8 @@ class ModbusSwitchEntity(ModbusCoordinatorEntity, SwitchEntity):
         device: DeviceInfo,
     ) -> None:
         """Initialize a PVOutput sensor."""
-        super().__init__(coordinator, ctx=ctx, device=device, domain=ControlType.SWITCH)
+        super().__init__(coordinator, ctx=ctx, device=device)
+        self._attr_entity_id = f"{ControlType.SWITCH}.{slugify(self._attr_device_info.manufacturer + '_' + self.entity_description.name)}"
 
     @callback
     def _handle_coordinator_update(self) -> None:

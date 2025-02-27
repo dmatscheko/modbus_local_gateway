@@ -10,6 +10,7 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers.device_registry import DeviceInfo
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
+from homeassistant.util import slugify
 
 from .coordinator import ModbusContext, ModbusCoordinator, ModbusCoordinatorEntity
 from .helpers import async_setup_entities
@@ -47,13 +48,14 @@ class ModbusSelectEntity(ModbusCoordinatorEntity, SelectEntity):  # type: ignore
         device: DeviceInfo,
     ) -> None:
         """Initialize a PVOutput Select."""
-        super().__init__(coordinator, ctx=ctx, device=device, domain=ControlType.SELECT)
+        super().__init__(coordinator, ctx=ctx, device=device)
         if (
             isinstance(ctx.desc, ModbusSelectEntityDescription)
             and ctx.desc.select_options
         ):
             self._attr_options: list[str] = list(ctx.desc.select_options.values())
         self._attr_current_option = None
+        self._attr_entity_id = f"{ControlType.SELECT}.{slugify(self._attr_device_info.manufacturer + '_' + self.entity_description.name)}"
 
     @callback
     def _handle_coordinator_update(self) -> None:

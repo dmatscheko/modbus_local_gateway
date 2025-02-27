@@ -13,6 +13,7 @@ from homeassistant.core import HomeAssistant, State, callback
 from homeassistant.helpers import device_registry as dr
 from homeassistant.helpers.device_registry import DeviceInfo
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
+from homeassistant.util import slugify
 
 from .coordinator import ModbusContext, ModbusCoordinator, ModbusCoordinatorEntity
 from .helpers import async_setup_entities
@@ -47,8 +48,9 @@ class ModbusSensorEntity(ModbusCoordinatorEntity, RestoreSensor):  # type: ignor
         device: DeviceInfo,
     ) -> None:
         """Initialize a PVOutput sensor."""
-        super().__init__(coordinator, ctx=ctx, device=device, domain=ControlType.SENSOR)
+        super().__init__(coordinator, ctx=ctx, device=device)
         self._attr_native_state: State | None
+        self._attr_entity_id = f"{ControlType.SENSOR}.{slugify(self._attr_device_info.manufacturer + '_' + self.entity_description.name)}"
 
 
     async def async_added_to_hass(self) -> None:

@@ -10,6 +10,7 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers.device_registry import DeviceInfo
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
+from homeassistant.util import slugify
 
 from .coordinator import ModbusContext, ModbusCoordinator, ModbusCoordinatorEntity
 from .helpers import async_setup_entities
@@ -42,9 +43,10 @@ class ModbusBinarySensorEntity(ModbusCoordinatorEntity, BinarySensorEntity):
         device: DeviceInfo,
     ) -> None:
         """Initialize a Modbus binary sensor."""
-        super().__init__(coordinator, ctx=ctx, device=device, domain=ControlType.BINARY_SENSOR)
+        super().__init__(coordinator, ctx=ctx, device=device)
         if not isinstance(ctx.desc, ModbusBinarySensorEntityDescription):
             raise TypeError("Invalid description type")
+        self._attr_entity_id = f"{ControlType.BINARY_SENSOR}.{slugify(self._attr_device_info.manufacturer + '_' + self.entity_description.name)}"
 
     @callback
     def _handle_coordinator_update(self) -> None:
