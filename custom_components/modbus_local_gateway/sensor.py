@@ -50,7 +50,6 @@ class ModbusSensorEntity(ModbusCoordinatorEntity, RestoreSensor):  # type: ignor
         """Initialize a PVOutput sensor."""
         super().__init__(coordinator, ctx=ctx, device=device)
         self._attr_native_state: State | None
-        # self._attr_entity_id = f"{ControlType.SENSOR}.{slugify(self._attr_device_info.manufacturer + '_' + self.entity_description.name)}"
 
 
     async def async_added_to_hass(self) -> None:

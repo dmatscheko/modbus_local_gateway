@@ -91,7 +91,6 @@ read_write_word: # Holding registers
     number:
       min: 30
       max: 400
-      step: 1
     unit_of_measurement: m³/h
     icon: mdi:fan-speed-1
     entity_category: config
@@ -104,7 +103,6 @@ read_write_word: # Holding registers
     number:
       min: 30
       max: 400
-      step: 1
     unit_of_measurement: m³/h
     icon: mdi:fan-speed-2
     entity_category: config
@@ -117,7 +115,6 @@ read_write_word: # Holding registers
     number:
       min: 30
       max: 400
-      step: 1
     unit_of_measurement: m³/h
     icon: mdi:fan-speed-3
     entity_category: config
@@ -130,7 +127,6 @@ read_write_word: # Holding registers
     number:
       min: 30
       max: 400
-      step: 1
     unit_of_measurement: m³/h
     icon: mdi:fan
     entity_category: config
@@ -142,7 +138,6 @@ read_write_word: # Holding registers
     number:
       min: 0
       max: 65000
-      step: 1
     unit_of_measurement: minutes
     icon: mdi:fan-clock
     entity_category: config
@@ -156,7 +151,6 @@ read_write_word: # Holding registers
     number:
       min: -20
       max: 50
-      step: 0.1
     unit_of_measurement: Celsius
     device_class: temperature
     icon: mdi:thermometer
@@ -171,7 +165,6 @@ read_write_word: # Holding registers
     number:
       min: -20
       max: 50
-      step: 0.1
     unit_of_measurement: Celsius
     device_class: temperature
     icon: mdi:thermometer
@@ -186,7 +179,6 @@ read_write_word: # Holding registers
     number:
       min: -20
       max: 50
-      step: 0.1
     unit_of_measurement: Celsius
     device_class: temperature
     icon: mdi:thermometer
@@ -199,7 +191,6 @@ read_write_word: # Holding registers
     number:
       min: 0
       max: 100
-      step: 1
     unit_of_measurement: "%"
     device_class: humidity
     icon: mdi:thermometer
@@ -213,7 +204,6 @@ read_write_word: # Holding registers
     number:
       min: 800
       max: 2000
-      step: 1
     unit_of_measurement: ppm
     device_class: co2
     icon: mdi:thermometer

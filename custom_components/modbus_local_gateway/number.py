@@ -49,10 +49,10 @@ class ModbusNumberEntity(ModbusCoordinatorEntity, NumberEntity):  # type: ignore
         if isinstance(ctx.desc, ModbusNumberEntityDescription):
             self._attr_native_max_value = ctx.desc.max
             self._attr_native_min_value = ctx.desc.min
+            self._attr_native_step = ctx.desc.get("register_multiplier", 1.0)
         else:
             raise TypeError()
         self._attr_mode = NumberMode.BOX
-        # self._attr_entity_id = f"{ControlType.NUMBER}.{slugify(self._attr_device_info.manufacturer + '_' + self.entity_description.name)}"
 
     @callback
     def _handle_coordinator_update(self) -> None:
