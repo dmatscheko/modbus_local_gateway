@@ -137,7 +137,7 @@ class ModbusDeviceInfo:
                             descriptions.append(desc)
         return tuple(descriptions)
 
-    def get_uom(self, data) -> dict[str, str | None]:
+    def get_uom(self, data, control_type) -> dict[str, str | None]:
         """Get the unit_of_measurement and device class"""
         unit = data.get(UOM)
         state_class: str | None = DEFAULT_STATE_CLASS
@@ -151,7 +151,8 @@ class ModbusDeviceInfo:
         device_class = data.get(DEVICE_CLASS, device_class)
         state_class = data.get(STATE_CLASS, state_class)
 
-        if device_class is None or data.get(IS_STRING, False):
+        # Add state_class for sensors only and not for strings
+        if device_class is None or data.get(IS_STRING, False) or control_type != ControlType.SENSOR:
             state_class = None
 
         return {
@@ -162,8 +163,6 @@ class ModbusDeviceInfo:
 
     def _create_description(self, entity: str, data_type: ModbusDataType, _data: dict[str, Any]) -> DESCRIPTION_TYPE | None:
         """Create an entity description based on data type"""
-        uom = self.get_uom(_data)
-
         default_control_type = {
             ModbusDataType.HOLDING_REGISTER: ControlType.SENSOR,
             ModbusDataType.INPUT_REGISTER: ControlType.SENSOR,
@@ -189,6 +188,8 @@ class ModbusDeviceInfo:
             _LOGGER.warning("Invalid control_type %s for data_type %s", control_type, data_type)
             return None
 
+        uom = self.get_uom(_data, control_type)
+
         # Start with all attributes from _data
         params = dict(_data)
 
@@ -213,10 +214,6 @@ class ModbusDeviceInfo:
             "device_class": uom["device_class"],
             "state_class": uom["state_class"],
         })
-
-        # # Add state_class for sensors only
-        # if control_type == ControlType.SENSOR:
-        #     params["state_class"] = uom["state_class"]
 
         # Handle entity_category directly from params
         if "entity_category" in params:
