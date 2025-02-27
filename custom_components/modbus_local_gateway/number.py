@@ -83,7 +83,7 @@ class ModbusNumberEntity(ModbusCoordinatorEntity, NumberEntity):  # type: ignore
             await self.coordinator.client.write_data(self.coordinator_context, value)
 
     @property
-    def state(self) -> int | float:
+    def state(self) -> int | float | str:
         """Return the state of the entity, formatted based on register_multiplier."""
         if self._attr_native_value is None:
             return ""
