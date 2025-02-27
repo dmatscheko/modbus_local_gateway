@@ -8,7 +8,6 @@ from typing import Any
 
 from homeassistant.const import EntityCategory
 from homeassistant.exceptions import HomeAssistantError
-from homeassistant.util import slugify
 from homeassistant.util.yaml import load_yaml
 from homeassistant.util.yaml.loader import JSON_TYPE
 
@@ -193,11 +192,9 @@ class ModbusDeviceInfo:
         # Start with all attributes from _data
         params = dict(_data)
 
-        manufacturer_slug = slugify(self.manufacturer)
-
         # Override or add required and computed fields
         params.update({
-            "key": f"{manufacturer_slug}_{entity}",
+            "key": entity,
             "name": _data.get(NAME, entity),
             "register_address": _data.get(REGISTER_ADDRESS),
             "register_count": _data.get(REGISTER_COUNT, 1),
